@@ -1,4 +1,6 @@
-This is your new Play 2.0 application
+PlayJongo Play 2.0 Module
 =====================================
 
-This file will be packaged with your application, when using `play dist`.
+This is a Play 2.0 Module for Jongo http://jongo.org/ 
+(a MongoDB Java driver wrapper)
+

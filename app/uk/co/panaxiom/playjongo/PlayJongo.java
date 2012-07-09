@@ -22,10 +22,10 @@ public class PlayJongo {
 	private GridFS gridfs;
 	
 	private PlayJongo() throws UnknownHostException, MongoException {
-			mongo = new Mongo(Play.application().configuration().getString("playjongo.host"), 
-					Play.application().configuration().getInt("playjongo.port"));
-			jongo = new Jongo(mongo.getDB(Play.application().configuration().getString("playjongo.db")));
-			gridfs = new GridFS(jongo.getDatabase());
+		mongo = new Mongo(Play.application().configuration().getString("playjongo.host"), 
+				Play.application().configuration().getInt("playjongo.port"));
+		jongo = new Jongo(mongo.getDB(Play.application().configuration().getString("playjongo.db")));
+		gridfs = new GridFS(jongo.getDatabase());
 	}
 	
 	public static PlayJongo getInstance() {

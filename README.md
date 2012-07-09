@@ -31,28 +31,27 @@ Usage
 
 To use this module you just use the PlayJongo class which manages your Mongo and Jongo instances for you. It provides the same method calls as the Jongo object as detailed in the Jongo documentation: http://jongo.org/ .
 
-For example:
+A simple example:
 
 	public class User {
 	
-		public ObjectId _id;
+		private static MongoCollection users = PlayJongo.getCollection("users");
+		
+		@JsonProperty("_id")
+		public ObjectId id;
 		
 		public String name;
 		
-		public static MongoCollection users() {
-			return PlayJongo.getCollection("users");
-		}
-		
 		public User insert() {
-			users().save(this);
+			users.save(this);
 		}
 		
 		public void remove() {
-			users().remove(this._id);
+			users.remove(this.id);
 		}
 		
 		public static User findByName(String name) {
-			return users().findOne("{name: '" + name + "'}").as(User.class);
+			return users.findOne("{name: '" + name + "'}").as(User.class);
 		}
 		
 	}

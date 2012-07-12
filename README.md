@@ -35,7 +35,9 @@ A simple example:
 
 	public class User {
 	
-		private static MongoCollection users = PlayJongo.getCollection("users");
+		public static MongoCollection users() {
+			return PlayJongo.getCollection("users");
+		}
 		
 		@JsonProperty("_id")
 		public ObjectId id;
@@ -43,15 +45,15 @@ A simple example:
 		public String name;
 		
 		public User insert() {
-			users.save(this);
+			users().save(this);
 		}
 		
 		public void remove() {
-			users.remove(this.id);
+			users().remove(this.id);
 		}
 		
 		public static User findByName(String name) {
-			return users.findOne("{name: '" + name + "'}").as(User.class);
+			return users().findOne("{name: '" + name + "'}").as(User.class);
 		}
 		
 	}

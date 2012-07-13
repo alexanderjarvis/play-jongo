@@ -17,15 +17,21 @@ public class PlayJongo {
 
 	private static volatile PlayJongo INSTANCE = null;
 
-	private Mongo mongo;
-	private Jongo jongo;
-	private GridFS gridfs;
+	private Mongo mongo = null;
+	private Jongo jongo = null;
+	private GridFS gridfs = null;
 	
 	private PlayJongo() throws UnknownHostException, MongoException {
-		mongo = new Mongo(Play.application().configuration().getString("playjongo.host"), 
-				Play.application().configuration().getInt("playjongo.port"));
-		jongo = new Jongo(mongo.getDB(Play.application().configuration().getString("playjongo.db")));
-		gridfs = new GridFS(jongo.getDatabase());
+		String host = Play.application().configuration().getString("playjongo.host");
+		int port = Play.application().configuration().getInt("playjongo.port");
+		String db = Play.application().configuration().getString("playjongo.db");
+		boolean gridfsEnabled = Play.application().configuration().getBoolean("playjongo.gridfs.enabled");
+		
+		mongo = new Mongo(host, port);
+		jongo = new Jongo(mongo.getDB(db));
+		if (gridfsEnabled) {
+			gridfs = new GridFS(jongo.getDatabase());
+		}
 	}
 	
 	public static PlayJongo getInstance() {

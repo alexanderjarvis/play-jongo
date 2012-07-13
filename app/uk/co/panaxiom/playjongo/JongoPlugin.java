@@ -13,5 +13,10 @@ public class JongoPlugin extends Plugin {
 	public void onStart() {
 		PlayJongo.getInstance();
 	}
+	
+	@Override
+	public void onStop() {
+		PlayJongo.mongo().close();
+	}
 
 }

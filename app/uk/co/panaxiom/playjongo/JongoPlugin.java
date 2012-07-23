@@ -1,6 +1,7 @@
 package uk.co.panaxiom.playjongo;
 
 import play.Application;
+import play.Play;
 import play.Plugin;
 
 public class JongoPlugin extends Plugin {
@@ -16,7 +17,9 @@ public class JongoPlugin extends Plugin {
 	
 	@Override
 	public void onStop() {
-		PlayJongo.mongo().close();
+		if (!Play.isTest()) {
+			PlayJongo.mongo().close();
+		}
 	}
 
 }

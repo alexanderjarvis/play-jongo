@@ -25,6 +25,10 @@ public class PlayJongo {
 		String host = Play.application().configuration().getString("playjongo.host");
 		int port = Play.application().configuration().getInt("playjongo.port");
 		String db = Play.application().configuration().getString("playjongo.db");
+		if (Play.isTest()) {
+			db = "test";
+		}
+		
 		boolean gridfsEnabled = Play.application().configuration().getBoolean("playjongo.gridfs.enabled");
 		
 		mongo = new Mongo(host, port);

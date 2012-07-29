@@ -5,7 +5,7 @@ import PlayProject._
 object ApplicationBuild extends Build {
 
     val appName         = "play-jongo"
-    val appVersion      = "1.1-SNAPSHOT"
+    val appVersion      = "0.2"
 
     val appDependencies = Seq(
       "org.mongodb" % "mongo-java-driver" % "2.8.0", 

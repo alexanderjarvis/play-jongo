@@ -53,7 +53,7 @@ A simple example:
 		}
 		
 		public static User findByName(String name) {
-			return users().findOne("{name: '" + name + "'}").as(User.class);
+			return users().findOne("{name: #}", name).as(User.class);
 		}
 		
 	}

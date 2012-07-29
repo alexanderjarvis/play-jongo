@@ -12,7 +12,7 @@ public class JongoPlugin extends Plugin {
 	
 	@Override
 	public void onStart() {
-		PlayJongo.getInstance();
+		PlayJongo.forceNewInstance();
 	}
 	
 	@Override

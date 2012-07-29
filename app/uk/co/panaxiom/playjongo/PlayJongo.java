@@ -54,6 +54,11 @@ public class PlayJongo {
 		}
 		return INSTANCE;
 	}
+	
+	public static void forceNewInstance() {
+		INSTANCE = null;
+		getInstance();
+	}
 
 	public static Mongo mongo() {
 		return getInstance().mongo;

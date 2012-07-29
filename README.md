@@ -10,7 +10,7 @@ Installation
 The project is currently released to a github repository so you will need to add the following to your projects Build.scala
 
 	val appDependencies = Seq(
-	  "uk.co.panaxiom" %% "play-jongo" % "1.0"
+	  "uk.co.panaxiom" %% "play-jongo" % "0.2"
 	)
 	
 	val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(

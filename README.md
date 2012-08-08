@@ -16,6 +16,16 @@ The project is currently released to a github repository so you will need to add
 	val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
       resolvers += Resolver.url("My GitHub Play Repository", url("http://alexanderjarvis.github.com/releases/"))(Resolver.ivyStylePatterns)
     )
+
+If you prefer to live on the edge, you can use the latest snapshot release, which also points to the snapshot of Jongo.
+
+	val appDependencies = Seq(
+      "uk.co.panaxiom" %% "play-jongo" % "0.3-SNAPSHOT"
+    )
+
+    val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
+      resolvers += Resolver.url("My GitHub Play Repository", url("http://alexanderjarvis.github.com/snapshots/"))(Resolver.ivyStylePatterns)
+    )
     
 You can also override the application.conf configuration to specify your MongoDB host, port and DB:
 

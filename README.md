@@ -14,7 +14,7 @@ The project is currently released to a github repository so you will need to add
 	)
 	
 	val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
-      resolvers += ("GitHub Play Repository" at "http://alexanderjarvis.github.com/releases/")
+      resolvers += Resolver.url("My GitHub Play Repository", url("http://alexanderjarvis.github.com/releases/"))(Resolver.ivyStylePatterns)
     )
     
 You can also override the application.conf configuration to specify your MongoDB host, port and DB:

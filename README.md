@@ -34,6 +34,7 @@ You can also override the application.conf configuration to specify your MongoDB
 	playjongo.host="127.0.0.1"
 	playjongo.port=27017
 	playjongo.db="play"
+	playjongo.gridfs.enabled=false
 
 
 Usage

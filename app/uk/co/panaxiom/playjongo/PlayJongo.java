@@ -11,6 +11,7 @@ import play.Play;
 import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
+import com.mongodb.MongoURI;
 import com.mongodb.gridfs.GridFS;
 
 public class PlayJongo {
@@ -22,16 +23,16 @@ public class PlayJongo {
   private GridFS gridfs = null;
 
   private PlayJongo() throws UnknownHostException, MongoException {
-    String host = Play.application().configuration().getString("playjongo.host");
-    int port = Play.application().configuration().getInt("playjongo.port");
-    String db = Play.application().configuration().getString("playjongo.db");
+    MongoURI uri = new MongoURI(Play.application().configuration().getString("playjongo.uri"));
+
+    String db = uri.getDatabase();
     if (Play.isTest()) {
       db = "test";
     }
 
     boolean gridfsEnabled = Play.application().configuration().getBoolean("playjongo.gridfs.enabled");
 
-    mongo = new Mongo(host, port);
+    mongo = new Mongo(uri);
     jongo = new Jongo(mongo.getDB(db));
     if (gridfsEnabled) {
       gridfs = new GridFS(jongo.getDatabase());

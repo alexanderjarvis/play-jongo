@@ -25,15 +25,23 @@ public class PlayJongo {
   private PlayJongo() throws UnknownHostException, MongoException {
     MongoURI uri = new MongoURI(Play.application().configuration().getString("playjongo.uri"));
 
-    String db = uri.getDatabase();
+    String databaseName = uri.getDatabase();
     if (Play.isTest()) {
-      db = "test";
+      databaseName = "test";
     }
 
     boolean gridfsEnabled = Play.application().configuration().getBoolean("playjongo.gridfs.enabled");
 
     mongo = new Mongo(uri);
-    jongo = new Jongo(mongo.getDB(db));
+    DB db = mongo.getDB(databaseName);
+
+    // Authenticate the user if necessary
+    if (uri.getUsername() != null) {
+      db.authenticate(uri.getUsername(), uri.getPassword());
+    }
+
+    jongo = new Jongo(db);
+
     if (gridfsEnabled) {
       gridfs = new GridFS(jongo.getDatabase());
     }

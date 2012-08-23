@@ -17,6 +17,14 @@ The project is currently released to a github repository so you will need to add
       resolvers += Resolver.url("My GitHub Play Repository", url("http://alexanderjarvis.github.com/releases/"))(Resolver.ivyStylePatterns)
     )
 
+You will need to override the application.conf configuration to specify your MongoDB configuration.
+	
+	# Play Jongo
+	# ~~~~~
+	playjongo.host="127.0.0.1"  	
+	playjongo.port=27017
+	playjongo.db="play"
+	
 If you prefer to live on the edge, you can use the latest snapshot release, which also points to the snapshot of Jongo.
 
 	val appDependencies = Seq(
@@ -26,14 +34,13 @@ If you prefer to live on the edge, you can use the latest snapshot release, whic
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
       resolvers += Resolver.url("My GitHub Play Repository", url("http://alexanderjarvis.github.com/snapshots/"))(Resolver.ivyStylePatterns)
     )
-    
-You will need to override the application.conf configuration to specify your MongoDB URI.
+
+For the latest snapshot, we've moved to using the Mongo URI (which allows authentication).
 
 	# Play Jongo
 	# ~~~~~
 	playjongo.uri="mongodb://127.0.0.1:27017/play"
 	playjongo.gridfs.enabled=false
-
 
 Usage
 -----

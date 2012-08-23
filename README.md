@@ -27,13 +27,11 @@ If you prefer to live on the edge, you can use the latest snapshot release, whic
       resolvers += Resolver.url("My GitHub Play Repository", url("http://alexanderjarvis.github.com/snapshots/"))(Resolver.ivyStylePatterns)
     )
     
-You can also override the application.conf configuration to specify your MongoDB host, port and DB:
+You will need to override the application.conf configuration to specify your MongoDB URI.
 
 	# Play Jongo
 	# ~~~~~
-	playjongo.host="127.0.0.1"
-	playjongo.port=27017
-	playjongo.db="play"
+	playjongo.uri="mongodb://127.0.0.1:27017/play"
 	playjongo.gridfs.enabled=false
 
 

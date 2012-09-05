@@ -25,10 +25,10 @@ You will need to override the application.conf configuration to specify your Mon
 	playjongo.port=27017
 	playjongo.db="play"
 	
-If you prefer to live on the edge, you can use the latest snapshot release, which also points to the snapshot of Jongo.
+If you prefer to live on the edge, you can use the latest release, which also points to the early release of Jongo.
 
 	val appDependencies = Seq(
-      "uk.co.panaxiom" %% "play-jongo" % "0.3-SNAPSHOT"
+      "uk.co.panaxiom" %% "play-jongo" % "0.3-early"
     )
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(

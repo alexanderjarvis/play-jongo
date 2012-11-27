@@ -24,6 +24,7 @@ You will need to override the application.conf configuration to specify your Mon
 	playjongo.host="127.0.0.1"  	
 	playjongo.port=27017
 	playjongo.db="play"
+	playjongo.gridfs.enabled=false
 	
 If you prefer to live on the edge, you can use the latest release, which also points to the early release of Jongo.
 

@@ -1,7 +1,7 @@
 PlayJongo Play 2.0 Module
 =====================================
 
-This is a Play 2.0 Module for Jongo http://jongo.org/ 
+This is a Play 2.0 Module for Jongo http://jongo.org/
 (a MongoDB Java driver wrapper)
 
 Installation
@@ -10,14 +10,15 @@ Installation
 The project is currently released to a github repository so you will need to add the following to your projects Build.scala
 
 	val appDependencies = Seq(
-	  "uk.co.panaxiom" %% "play-jongo" % "0.2"
+	  "uk.co.panaxiom" %% "play-jongo" % "0.3"
 	)
-	
-	val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
+
+	val main = play.Project(appName, appVersion, appDependencies).settings(
       resolvers += Resolver.url("My GitHub Play Repository", url("http://alexanderjarvis.github.com/releases/"))(Resolver.ivyStylePatterns)
     )
 
 You will need to override the application.conf configuration to specify your MongoDB configuration.
+<<<<<<< HEAD
 	
 	# Play Jongo
 	# ~~~~~
@@ -37,6 +38,8 @@ If you prefer to live on the edge, you can use the latest release, which also po
     )
 
 For the latest snapshot, we've moved to using the Mongo URI (which allows authentication).
+=======
+>>>>>>> 0.3 jongo release & for 2.10 as well :)
 
 	# Play Jongo
 	# ~~~~~
@@ -51,26 +54,31 @@ To use this module you just use the PlayJongo class which manages your Mongo and
 A simple example:
 
 	public class User {
-	
+
 		public static MongoCollection users() {
 			return PlayJongo.getCollection("users");
 		}
-		
+
 		@JsonProperty("_id")
 		public ObjectId id;
-		
+
 		public String name;
-		
+
 		public User insert() {
 			users().save(this);
 		}
-		
+
 		public void remove() {
 			users().remove(this.id);
 		}
-		
+
 		public static User findByName(String name) {
 			return users().findOne("{name: #}", name).as(User.class);
 		}
+<<<<<<< HEAD
 		
 	}
+=======
+
+	}
+>>>>>>> 0.3 jongo release & for 2.10 as well :)

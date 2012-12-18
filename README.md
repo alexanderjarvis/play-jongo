@@ -18,28 +18,6 @@ The project is currently released to a github repository so you will need to add
     )
 
 You will need to override the application.conf configuration to specify your MongoDB configuration.
-<<<<<<< HEAD
-	
-	# Play Jongo
-	# ~~~~~
-	playjongo.host="127.0.0.1"  	
-	playjongo.port=27017
-	playjongo.db="play"
-	playjongo.gridfs.enabled=false
-	
-If you prefer to live on the edge, you can use the latest release, which also points to the early release of Jongo.
-
-	val appDependencies = Seq(
-      "uk.co.panaxiom" %% "play-jongo" % "0.3-early"
-    )
-
-    val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
-      resolvers += Resolver.url("My GitHub Play Repository", url("http://alexanderjarvis.github.com/snapshots/"))(Resolver.ivyStylePatterns)
-    )
-
-For the latest snapshot, we've moved to using the Mongo URI (which allows authentication).
-=======
->>>>>>> 0.3 jongo release & for 2.10 as well :)
 
 	# Play Jongo
 	# ~~~~~
@@ -75,10 +53,5 @@ A simple example:
 		public static User findByName(String name) {
 			return users().findOne("{name: #}", name).as(User.class);
 		}
-<<<<<<< HEAD
-		
-	}
-=======
 
 	}
->>>>>>> 0.3 jongo release & for 2.10 as well :)

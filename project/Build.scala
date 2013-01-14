@@ -12,7 +12,7 @@ object ApplicationBuild extends Build {
       "org.jongo" % "jongo" % "0.3"
     )
 
-    val main = play.Project(appName, appVersion, appDependencies).settings(
+    val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
       organization := "uk.co.panaxiom"
       //resolvers += ("cloudbees-jongo-early-release" at "http://repository-jongo.forge.cloudbees.com/release")
     )

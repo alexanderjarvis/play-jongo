@@ -13,10 +13,9 @@ object ApplicationBuild extends Build {
     )
 
     val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
-      organization := "uk.co.panaxiom"
+      organization := "uk.co.panaxiom",
+      javacOptions ++= Seq("-source", "1.6", "-target", "1.6", "-encoding", "UTF-8")
       //resolvers += ("cloudbees-jongo-early-release" at "http://repository-jongo.forge.cloudbees.com/release")
     )
-
-    javacOptions ++= Seq("-target", "6")
 
 }

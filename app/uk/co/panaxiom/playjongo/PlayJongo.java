@@ -2,34 +2,31 @@ package uk.co.panaxiom.playjongo;
 
 import java.net.UnknownHostException;
 
+import com.mongodb.*;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 
 import play.Logger;
 import play.Play;
 
-import com.mongodb.DB;
-import com.mongodb.Mongo;
-import com.mongodb.MongoException;
-import com.mongodb.MongoURI;
 import com.mongodb.gridfs.GridFS;
 
 public class PlayJongo {
 
     private static volatile PlayJongo INSTANCE = null;
 
-    private Mongo mongo = null;
+    private MongoClient mongo = null;
     private Jongo jongo = null;
     private GridFS gridfs = null;
 
     private PlayJongo() throws UnknownHostException, MongoException {
-        MongoURI uri = new MongoURI(Play.application().configuration().getString("playjongo.uri"));
+        MongoClientURI uri = new MongoClientURI(Play.application().configuration().getString("playjongo.uri", "mongodb://127.0.0.1:27017/play"));
 
         if (Play.isTest()) {
-            mongo = new Mongo("localhost", 27017);
+            mongo = new MongoClient("localhost", 27017);
             jongo = new Jongo(mongo.getDB("test"));
         } else {
-            mongo = new Mongo(uri);
+            mongo = new MongoClient(uri);
             DB db = mongo.getDB(uri.getDatabase());
 
             // Authenticate the user if necessary
@@ -39,7 +36,7 @@ public class PlayJongo {
             jongo = new Jongo(db);
         }
 
-        if (Play.application().configuration().getBoolean("playjongo.gridfs.enabled")) {
+        if (Play.application().configuration().getBoolean("playjongo.gridfs.enabled", false)) {
             gridfs = new GridFS(jongo.getDatabase());
         }
     }

@@ -1,7 +1,7 @@
-PlayJongo Play 2.0 Module
+PlayJongo Play 2.1 Module
 =====================================
 
-This is a Play 2.0 Module for Jongo http://jongo.org/
+This is a Play 2.1 Module for Jongo http://jongo.org/
 (a MongoDB Java driver wrapper)
 
 Installation
@@ -10,7 +10,7 @@ Installation
 The project is currently released to a github repository so you will need to add the following to your projects Build.scala
 
 	val appDependencies = Seq(
-	  "uk.co.panaxiom" %% "play-jongo" % "0.3"
+	  "uk.co.panaxiom" %% "play-jongo" % "0.4"
 	)
 
 	val main = play.Project(appName, appVersion, appDependencies).settings(

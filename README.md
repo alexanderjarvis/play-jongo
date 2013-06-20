@@ -24,6 +24,13 @@ You will need to override the application.conf configuration to specify your Mon
 	playjongo.uri="mongodb://127.0.0.1:27017/play"
 	playjongo.gridfs.enabled=false
 
+The default write concern for the mongodb driver can be changed via the following configuration:
+
+	playjongo.defaultWriteConcern="SAFE"
+
+Valid values are the names of the [WriteConcern enumeration](http://api.mongodb.org/java/current/com/mongodb/WriteConcern.html) fields.
+
+
 Usage
 -----
 

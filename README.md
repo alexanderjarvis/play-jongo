@@ -24,7 +24,23 @@ You will need to override the application.conf configuration to specify your Mon
 	playjongo.uri="mongodb://127.0.0.1:27017/play"
 	playjongo.gridfs.enabled=false
 
+### Optional configuration
+
 By default in test mode the "test" mongo database will be used. To change this, you can specify `playjongo.test-uri` in your configuration.
+
+To customize the jongo mapper (see also ["Configuring Jongo Mapper"](http://jongo.org/#jongo-mapper) in the Jongo documentation) you can
+provide a factory that will be used to obtain the mapper passed to jongo. Your factory class must implement
+`uk.co.panaxiom.playjongo.JongoMapperFactory` and provide a default (public no-args) constructor.
+You can configure your mapper factory like this:
+
+	playjongo.mapperfactory="com.example.MyJongoMapperFactory"
+
+For scala users this project already provides a factory that uses the [jackson scala module](https://github.com/FasterXML/jackson-module-scala)
+and configures the jongo/jackson mapper with the `DefaultScalaModule`. To use this factory you need add the jackson scala module to your appDependencies
+(e.g. add `"com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.2.1"`) in `project/Build.scala` and configure the factory in
+`conf/application.conf` like this:
+
+	playjongo.mapperfactory="uk.co.panaxiom.playjongo.JongoScalaMapperFactory"
 
 Usage
 -----

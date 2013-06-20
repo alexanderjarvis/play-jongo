@@ -9,7 +9,8 @@ object ApplicationBuild extends Build {
 
     val appDependencies = Seq(
       "org.mongodb" % "mongo-java-driver" % "2.11.1",
-      "org.jongo" % "jongo" % "0.4"
+      "org.jongo" % "jongo" % "0.4",
+      "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.2.1" % "optional"
     )
 
     val main = play.Project(appName, appVersion, appDependencies).settings(

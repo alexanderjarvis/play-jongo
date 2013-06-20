@@ -1,9 +1,8 @@
 package uk.co.panaxiom.playjongo;
 
-import java.net.UnknownHostException;
-
 import com.mongodb.*;
 import org.jongo.Jongo;
+import org.jongo.Mapper;
 import org.jongo.MongoCollection;
 
 import play.Logger;
@@ -19,7 +18,7 @@ public class PlayJongo {
     private Jongo jongo = null;
     private GridFS gridfs = null;
 
-    private PlayJongo() throws UnknownHostException, MongoException {
+    private PlayJongo() throws Exception {
         MongoClientURI uri = new MongoClientURI(
                 Play.isTest()
                     ? Play.application().configuration().getString("playjongo.test-uri", "mongodb://127.0.0.1:27017/test")
@@ -32,11 +31,21 @@ public class PlayJongo {
         if (uri.getUsername() != null) {
             db.authenticate(uri.getUsername(), uri.getPassword());
         }
-        jongo = new Jongo(db);
+        jongo = new Jongo(db, createMapper());
 
         if (Play.application().configuration().getBoolean("playjongo.gridfs.enabled", false)) {
             gridfs = new GridFS(jongo.getDatabase());
         }
+    }
+
+    private Mapper createMapper() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+        final String factoryClassName = Play.application().configuration().getString("playjongo.mapperfactory",
+                JongoMapperFactory.DefaultFactory.class.getName());
+        JongoMapperFactory factory = (JongoMapperFactory) Class.forName(
+                factoryClassName,
+                true,
+                Play.application().classloader()).newInstance();
+        return factory.create();
     }
 
     public static PlayJongo getInstance() {
@@ -45,10 +54,8 @@ public class PlayJongo {
                 if (INSTANCE == null) {
                     try {
                         INSTANCE = new PlayJongo();
-                    } catch (UnknownHostException e) {
-                        Logger.error("UnknownHostException", e);
-                    } catch (MongoException e) {
-                        Logger.error("MongoException", e);
+                    } catch (Exception e) {
+                        Logger.error(e.getClass().getSimpleName(), e);
                     }
                 }
             }

@@ -26,6 +26,12 @@ You will need to override the application.conf configuration to specify your Mon
 
 ### Optional configuration
 
+The default write concern for the mongodb driver can be changed via the following configuration:
+
+	playjongo.defaultWriteConcern="SAFE"
+
+Valid values are the names of the [WriteConcern enumeration](http://api.mongodb.org/java/current/com/mongodb/WriteConcern.html) fields.
+
 By default in test mode the "test" mongo database will be used. To change this, you can specify `playjongo.test-uri` in your configuration.
 
 To customize the jongo mapper (see also ["Configuring Jongo Mapper"](http://jongo.org/#jongo-mapper) in the Jongo documentation) you can

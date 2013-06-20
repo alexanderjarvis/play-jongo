@@ -24,6 +24,13 @@ You will need to override the application.conf configuration to specify your Mon
 	playjongo.uri="mongodb://127.0.0.1:27017/play"
 	playjongo.gridfs.enabled=false
 
+To customize the jongo mapper (see also ["Configuring Jongo Mapper"](http://jongo.org/#jongo-mapper) in the Jongo documentation) you can
+provide a factory that will be used to obtain the mapper passed to jongo. Your factory class must implement
+`uk.co.panaxiom.playjongo.JongoMapperFactory` and provide a default (public no-args) constructor.
+You can configure your mapper factory like this:
+
+	playjongo.mapperfactory="com.example.MyJongoMapperFactory"
+
 Usage
 -----
 

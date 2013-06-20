@@ -24,6 +24,8 @@ You will need to override the application.conf configuration to specify your Mon
 	playjongo.uri="mongodb://127.0.0.1:27017/play"
 	playjongo.gridfs.enabled=false
 
+By default in test mode the "test" mongo database will be used. To change this, you can specify `playjongo.test-uri` in your configuration.
+
 Usage
 -----
 

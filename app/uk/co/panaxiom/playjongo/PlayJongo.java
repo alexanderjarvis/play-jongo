@@ -6,6 +6,7 @@ import com.mongodb.*;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 
+import play.Configuration;
 import play.Logger;
 import play.Play;
 
@@ -20,13 +21,20 @@ public class PlayJongo {
     private GridFS gridfs = null;
 
     private PlayJongo() throws UnknownHostException, MongoException {
+        Configuration config = Play.application().configuration();
         MongoClientURI uri = new MongoClientURI(
                 Play.isTest()
-                    ? Play.application().configuration().getString("playjongo.test-uri", "mongodb://127.0.0.1:27017/test")
-                    : Play.application().configuration().getString("playjongo.uri", "mongodb://127.0.0.1:27017/play"));
+                    ? config.getString("playjongo.test-uri", "mongodb://127.0.0.1:27017/test")
+                    : config.getString("playjongo.uri", "mongodb://127.0.0.1:27017/play"));
 
         mongo = new MongoClient(uri);
         DB db = mongo.getDB(uri.getDatabase());
+
+        // Set write concern if configured
+        String defaultWriteConcern = config.getString("playjongo.defaultWriteConcern");
+        if(defaultWriteConcern != null) {
+            db.setWriteConcern(WriteConcern.valueOf(defaultWriteConcern));
+        }
 
         // Authenticate the user if necessary
         if (uri.getUsername() != null) {
@@ -34,7 +42,7 @@ public class PlayJongo {
         }
         jongo = new Jongo(db);
 
-        if (Play.application().configuration().getBoolean("playjongo.gridfs.enabled", false)) {
+        if (config.getBoolean("playjongo.gridfs.enabled", false)) {
             gridfs = new GridFS(jongo.getDatabase());
         }
     }

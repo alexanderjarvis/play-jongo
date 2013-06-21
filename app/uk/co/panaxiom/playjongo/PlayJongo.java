@@ -15,14 +15,13 @@ public class PlayJongo {
 
     private static volatile PlayJongo INSTANCE = null;
 
-    private MongoClient mongo = null;
-    private Jongo jongo = null;
-    private GridFS gridfs = null;
+    MongoClient mongo = null;
+    Jongo jongo = null;
+    GridFS gridfs = null;
 
-    private PlayJongo() throws Exception {
-        Configuration config = Play.application().configuration();
+    PlayJongo(Configuration config, ClassLoader classLoader, boolean isTestMode) throws Exception {
         MongoClientURI uri = new MongoClientURI(
-                Play.isTest()
+                isTestMode
                     ? config.getString("playjongo.test-uri", "mongodb://127.0.0.1:27017/test")
                     : config.getString("playjongo.uri", "mongodb://127.0.0.1:27017/play"));
 
@@ -39,20 +38,20 @@ public class PlayJongo {
         if (uri.getUsername() != null) {
             db.authenticate(uri.getUsername(), uri.getPassword());
         }
-        jongo = new Jongo(db, createMapper());
+        jongo = new Jongo(db, createMapper(config, classLoader));
 
         if (config.getBoolean("playjongo.gridfs.enabled", false)) {
             gridfs = new GridFS(jongo.getDatabase());
         }
     }
 
-    private Mapper createMapper() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-        final String factoryClassName = Play.application().configuration().getString("playjongo.mapperfactory",
+    private Mapper createMapper(Configuration config, ClassLoader classLoader) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+        final String factoryClassName = config.getString("playjongo.mapperfactory",
                 JongoMapperFactory.DefaultFactory.class.getName());
         JongoMapperFactory factory = (JongoMapperFactory) Class.forName(
                 factoryClassName,
                 true,
-                Play.application().classloader()).newInstance();
+                classLoader).newInstance();
         return factory.create();
     }
 
@@ -61,7 +60,7 @@ public class PlayJongo {
             synchronized (PlayJongo.class) {
                 if (INSTANCE == null) {
                     try {
-                        INSTANCE = new PlayJongo();
+                        INSTANCE = new PlayJongo(Play.application().configuration(), Play.application().classloader(), Play.isTest());
                     } catch (Exception e) {
                         Logger.error(e.getClass().getSimpleName(), e);
                     }

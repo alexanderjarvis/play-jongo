@@ -19,7 +19,7 @@ public class PlayJongo {
     private Jongo jongo = null;
     private GridFS gridfs = null;
 
-    private PlayJongo() throws UnknownHostException, MongoException {
+    private PlayJongo() throws Exception {
         Configuration config = Play.application().configuration();
         MongoClientURI uri = new MongoClientURI(
                 Play.isTest()

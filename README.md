@@ -79,3 +79,8 @@ A simple example:
 		}
 
 	}
+
+License
+-------
+
+The license is Apache 2.0, see LICENSE.txt.

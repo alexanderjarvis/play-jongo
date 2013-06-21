@@ -1,6 +1,7 @@
 import sbt._
 import Keys._
 import PlayProject._
+import de.johoop.findbugs4sbt.FindBugs._
 
 object ApplicationBuild extends Build {
 
@@ -13,7 +14,8 @@ object ApplicationBuild extends Build {
       "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.2.1" % "optional"
     )
 
-    val main = play.Project(appName, appVersion, appDependencies).settings(
+    val main = play.Project(appName, appVersion, appDependencies,
+      settings = Defaults.defaultSettings ++ findbugsSettings).settings(
       organization := "uk.co.panaxiom",
       javacOptions ++= Seq("-source", "1.6", "-target", "1.6", "-encoding", "UTF-8")
       //resolvers += ("cloudbees-jongo-early-release" at "http://repository-jongo.forge.cloudbees.com/release")

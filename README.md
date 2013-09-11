@@ -9,15 +9,11 @@ This is a Play 2.1 Module for [Jongo](http://jongo.org/)
 Installation
 -----------
 
-The project is currently released to a github repository so you will need to add the following to your projects Build.scala
+Add the following to your projects Build.scala
 
 	val appDependencies = Seq(
-	  "uk.co.panaxiom" %% "play-jongo" % "0.4"
+	  "uk.co.panaxiom" %% "play-jongo" % "0.5.0-jongo0.4"
 	)
-
-	val main = play.Project(appName, appVersion, appDependencies).settings(
-      resolvers += Resolver.url("My GitHub Play Repository", url("http://alexanderjarvis.github.com/releases/"))(Resolver.ivyStylePatterns)
-    )
 
 You will need to override the application.conf configuration to specify your MongoDB configuration.
 

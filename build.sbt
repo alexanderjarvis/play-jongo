@@ -13,7 +13,7 @@ version := "0.5.0-jongo0.4"
 libraryDependencies ++= Seq(
   "org.mongodb" % "mongo-java-driver" % "2.11.1",
   "org.jongo" % "jongo" % "0.4",
-  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.2.1" % "optional"
+  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.2.3" % "optional"
 )
 
 playScalaSettings

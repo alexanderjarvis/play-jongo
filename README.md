@@ -14,7 +14,7 @@ Installation
 Add the following to your projects Build.scala
 
 	val appDependencies = Seq(
-	  "uk.co.panaxiom" %% "play-jongo" % "0.5.0-jongo0.4"
+	  "uk.co.panaxiom" %% "play-jongo" % "0.6.0-jongo0.4"
 	)
 
 You will need to override the application.conf configuration to specify your MongoDB configuration.

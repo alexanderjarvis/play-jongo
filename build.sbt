@@ -7,7 +7,7 @@ organization := "uk.co.panaxiom"
 
 description := "Play 2.2 Module for Jongo http://jongo.org/"
 
-version := "0.5.0-jongo0.4"
+version := "0.6.0-jongo0.4"
 
 
 libraryDependencies ++= Seq(

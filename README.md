@@ -1,8 +1,10 @@
-PlayJongo Play 2.1 Module
+PlayJongo Play 2.2 Module
 =====================================
 
-This is a Play 2.1 Module for [Jongo](http://jongo.org/)
+This is a Play 2.2 Module for [Jongo](http://jongo.org/)
 (a MongoDB Java driver wrapper).
+
+*If you're using Play! 2.1.x you can use an older versionof play-jongo, specifically version `0.5.0-jongo0.4`.*
 
 [![Build Status](https://jenkins.inoio.de/job/play-jongo/badge/icon)](http://jenkins.inoio.de/job/play-jongo/)
 

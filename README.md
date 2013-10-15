@@ -93,6 +93,11 @@ A simple example:
 
 	}
 
+Contact
+-------
+
+If you have a question or need some help you can just [open an issue](https://github.com/alexanderjarvis/play-jongo/issues). 
+
 License
 -------
 

@@ -17,6 +17,19 @@ Add the following to your projects Build.scala
 	  "uk.co.panaxiom" %% "play-jongo" % "0.6.0-jongo0.4"
 	)
 
+*__Note:__ because there were issues reported due to incompatibilities of Play 2.2!, bson4jackson and the current version of jackson,
+you might actually want to use the following dependencies:*
+
+	val appDependencies = Seq(
+	  "de.undercouch" % "bson4jackson" % "2.1.0" force(),
+	  "com.fasterxml.jackson.core" % "jackson-databind" % "2.1.0" force(),
+	  "com.fasterxml.jackson.core" % "jackson-annotations" % "2.1.0" force(),
+	  "com.fasterxml.jackson.core" % "jackson-core" % "2.1.0" force(),
+	  "org.mongodb" % "mongo-java-driver" % "2.11.3",
+	  "org.jongo" % "jongo" % "0.4",
+	  "uk.co.panaxiom" %% "play-jongo" % "0.6.0-jongo0.4"
+	)
+
 You will need to override the application.conf configuration to specify your MongoDB configuration.
 
 	# Play Jongo

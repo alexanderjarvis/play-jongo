@@ -47,6 +47,52 @@ Valid values are the names of the [WriteConcern enumeration](http://api.mongodb.
 
 By default in test mode the "test" mongo database will be used. To change this, you can specify `playjongo.test-uri` in your configuration.
 
+#### MongoClient Factory
+
+Not all MongoClient options are supported by the MongoClientURI.  For full customization of the generated MongoClient, you can specify
+your own MongoClientFactory class like this:
+
+        playjongo.mongoClientFactory="com.example.MyMongoClientFactory"
+
+The value should be the name of a class that extends from `uk.co.panaxiom.MongoClientFactory` and provide at least an empty constructor or
+a constructor that takes a play Configuration.  For example:
+
+```java
+    package com.example;
+
+    import com.mongodb.*;
+    import java.util.Arrays;
+    import play.Configuration;
+    import uk.co.panaxiom.MongoClientFactory;
+
+    public class MyMongoClientFactory extends MongoClientFactory {
+        private Configuration config = config;
+        public MyMongoClientFactory(Configuration config) {
+            this.config = config;
+        }
+
+        public MongoClient createClient() throws Exception {
+            MongoClientOptions options = MongoClientOptions.builder()
+                .connectionsPerHost(100)
+                .maxConnectionIdleTime(60000)
+                .build() 
+
+            return new MongoClient(Arrays.asList(
+                new ServerAddress("localhost", 27017),
+                new ServerAddress("localhost", 27018),
+                new ServerAddress("localhost", 27019)),
+                options);
+        }
+
+        public String getDBName() {
+            config.getString("myappconfig.dbname");
+        }
+        
+    }
+```
+
+#### Jongo Mapper
+
 To customize the jongo mapper (see also ["Configuring Jongo Mapper"](http://jongo.org/#jongo-mapper) in the Jongo documentation) you can
 provide a factory that will be used to obtain the mapper passed to jongo. Your factory class must implement
 `uk.co.panaxiom.playjongo.JongoMapperFactory` and provide a default (public no-args) constructor.

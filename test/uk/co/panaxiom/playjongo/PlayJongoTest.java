@@ -42,6 +42,16 @@ public class PlayJongoTest {
         assertThat(cut.jongo.getDatabase().getWriteConcern()).isEqualTo(WriteConcern.REPLICAS_SAFE);
     }
 
+    @Test
+    public void testMongoClientFactory() throws Exception {
+        Map<String, String> config = mapBuilder("playjongo.test-uri", "mongodb://example.com:27018/bar")
+                .with("playjongo.mongoClientFactory", TestMongoClientFactory.class.getName()).get();
+        final PlayJongo cut = playJongo(config, false);
+        // TestMongoClientFactory overrides getDBName, so using this to test we constructed with our
+        // specified factory class
+        assertThat(cut.jongo.getDatabase().getName()).isEqualTo("testMongoClientFactory");
+    }
+
     private void assertMongoProperties(final PlayJongo cut, String host, int port, String dbName) {
         assertThat(cut.mongo.getServerAddressList().size()).isEqualTo(1);
         final ServerAddress server0 = cut.mongo.getServerAddressList().get(0);

@@ -1,6 +1,7 @@
 package uk.co.panaxiom.playjongo;
 
-import com.mongodb.*;
+import java.lang.reflect.Constructor;
+
 import org.jongo.Jongo;
 import org.jongo.Mapper;
 import org.jongo.MongoCollection;
@@ -9,6 +10,9 @@ import play.Configuration;
 import play.Logger;
 import play.Play;
 
+import com.mongodb.DB;
+import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
 import com.mongodb.gridfs.GridFS;
 
 public class PlayJongo {
@@ -20,29 +24,50 @@ public class PlayJongo {
     GridFS gridfs = null;
 
     PlayJongo(Configuration config, ClassLoader classLoader, boolean isTestMode) throws Exception {
-        MongoClientURI uri = new MongoClientURI(
-                isTestMode
-                    ? config.getString("playjongo.test-uri", "mongodb://127.0.0.1:27017/test")
-                    : config.getString("playjongo.uri", "mongodb://127.0.0.1:27017/play"));
+        
+        String clientFactoryName = config.getString("playjongo.mongoClientFactory");
+        MongoClientFactory factory = getMongoClientFactory(clientFactoryName, config, isTestMode);
+        mongo = factory.createClient();
 
-        mongo = new MongoClient(uri);
-        DB db = mongo.getDB(uri.getDatabase());
-
-        // Set write concern if configured
-        String defaultWriteConcern = config.getString("playjongo.defaultWriteConcern");
-        if(defaultWriteConcern != null) {
-            db.setWriteConcern(WriteConcern.valueOf(defaultWriteConcern));
+        if (mongo == null) {
+            throw new IllegalStateException("No MongoClient was created by instance of "+ factory.getClass().getName());
         }
 
-        // Authenticate the user if necessary
-        if (uri.getUsername() != null) {
-            db.authenticate(uri.getUsername(), uri.getPassword());
-        }
+        DB db = mongo.getDB(factory.getDBName());
+
         jongo = new Jongo(db, createMapper(config, classLoader));
 
         if (config.getBoolean("playjongo.gridfs.enabled", false)) {
             gridfs = new GridFS(jongo.getDatabase());
         }
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    protected MongoClientFactory getMongoClientFactory(String className, Configuration config, boolean isTestMode) throws Exception {
+
+        if (className != null) {
+            try {
+                Class factoryClass = Class.forName(className, true, Thread.currentThread().getContextClassLoader());
+                if (!MongoClientFactory.class.isAssignableFrom(factoryClass)) {
+                    throw new IllegalStateException("mongoClientFactory '" + className +
+                            "' is not of type " + MongoClientFactory.class.getName());
+                }
+
+                Constructor constructor = null;
+                try {
+                    constructor = factoryClass.getConstructor(Configuration.class);
+                } catch (Exception e) {
+                    // can't use that one
+                }
+                if (constructor == null) {
+                    return (MongoClientFactory) factoryClass.newInstance();
+                }
+                return (MongoClientFactory) constructor.newInstance(config);
+            } catch (ClassNotFoundException e) {
+                throw e;
+            }
+        }
+        return new MongoClientFactory(config, isTestMode);
     }
 
     private Mapper createMapper(Configuration config, ClassLoader classLoader) throws InstantiationException, IllegalAccessException, ClassNotFoundException {

@@ -7,12 +7,12 @@ organization := "uk.co.panaxiom"
 
 description := "Play 2.2 Module for Jongo http://jongo.org/"
 
-version := "0.6.0-jongo0.4"
+version := "0.6.0-jongo1.0"
 
 
 libraryDependencies ++= Seq(
   "org.mongodb" % "mongo-java-driver" % "2.11.1",
-  "org.jongo" % "jongo" % "0.4",
+  "org.jongo" % "jongo" % "1.0",
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.2.3" % "optional"
 )
 

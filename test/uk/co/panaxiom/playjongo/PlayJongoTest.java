@@ -19,23 +19,23 @@ public class PlayJongoTest {
     
     @Test
     public void testMongoUriConfig() throws Exception {
-        Map<String, String> config = mapBuilder("playjongo.uri", "mongodb://example.com:27018/foo").get();
+        Map<String, String> config = mapBuilder("playjongo.uri", "mongodb://localhost:27017/foo").get();
         final PlayJongo cut = playJongo(config, false);
         
-        assertMongoProperties(cut, "example.com", 27018, "foo");
+        assertMongoProperties(cut, "localhost", 27017, "foo");
     }
     
     @Test
     public void testMongoTestUriConfig() throws Exception {
-        Map<String, String> config = mapBuilder("playjongo.test-uri", "mongodb://example.com:27018/bar").get();
+        Map<String, String> config = mapBuilder("playjongo.test-uri", "mongodb://localhost:27017/bar").get();
         final PlayJongo cut = playJongo(config, true);
 
-        assertMongoProperties(cut, "example.com", 27018, "bar");
+        assertMongoProperties(cut, "localhost", 27017, "bar");
     }
     
     @Test
     public void testMongoWriteConcern() throws Exception {
-        Map<String, String> config = mapBuilder("playjongo.uri", "mongodb://example.com:27017/foo")
+        Map<String, String> config = mapBuilder("playjongo.uri", "mongodb://localhost:27017/foo")
                 .with("playjongo.defaultWriteConcern", "REPLICAS_SAFE").get();
         final PlayJongo cut = playJongo(config, false);
 

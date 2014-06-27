@@ -1,10 +1,10 @@
-PlayJongo Play 2.3.1 Module
+PlayJongo Play 2.3.x Module
 =====================================
 
-This is a Play 2.3.1 Module for [Jongo](http://jongo.org/)
+This is a Play 2.3.x Module for [Jongo](http://jongo.org/)
 (a MongoDB Java driver wrapper).
 
-*If you're using Play! 2.1.x you can use an older version of play-jongo, specifically version `0.5.0-jongo0.4`.*
+*If you're using Play! 2.2.x or 2.1.x you can use an older version of play-jongo, for 2.2.x use `0.6.0-jongo1.0`, for 2.1.x use `0.5.0-jongo0.4`.*
 
 [![Build Status](https://jenkins.inoio.de/job/play-jongo/badge/icon)](http://jenkins.inoio.de/job/play-jongo/)
 
@@ -17,7 +17,7 @@ Add the following to your projects Build.scala
 	  "uk.co.panaxiom" %% "play-jongo" % "0.7.0-jongo1.0"
 	)
 
-*__Note:__ because there were issues reported due to incompatibilities of Play 2.2!, bson4jackson and the current version of jackson,
+*__Note related to play-jongo with Play 2.2:__ because there were issues reported due to incompatibilities of Play 2.2!, bson4jackson and the current version of jackson,
 you might actually want to use the following dependencies:*
 
 	val appDependencies = Seq(
@@ -56,7 +56,7 @@ You can configure your mapper factory like this:
 
 For scala users this project already provides a factory that uses the [jackson scala module](https://github.com/FasterXML/jackson-module-scala)
 and configures the jongo/jackson mapper with the `DefaultScalaModule`. To use this factory you need add the jackson scala module to your appDependencies
-(e.g. add `"com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.2.1"`) in `project/Build.scala` and configure the factory in
+(e.g. add `"com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.4.1"`) in `project/Build.scala` and configure the factory in
 `conf/application.conf` like this:
 
 	playjongo.mapperfactory="uk.co.panaxiom.playjongo.JongoScalaMapperFactory"

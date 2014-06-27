@@ -16,6 +16,8 @@ libraryDependencies ++= Seq(
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.4.1" % "optional"
 )
 
+lazy val root = (project in file(".")).enablePlugins(PlayScala)
+
 findbugsSettings
 
 javacOptions ++= Seq("-source", "1.6", "-target", "1.6", "-encoding", "UTF-8")

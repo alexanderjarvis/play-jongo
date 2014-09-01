@@ -43,11 +43,6 @@ public class MongoClientFactory {
         if(defaultWriteConcern != null) {
             db.setWriteConcern(WriteConcern.valueOf(defaultWriteConcern));
         }
-
-        // Authenticate the user if necessary
-        if (uri.getUsername() != null) {
-            db.authenticate(uri.getUsername(), uri.getPassword());
-        }
         
         return mongo;
     }

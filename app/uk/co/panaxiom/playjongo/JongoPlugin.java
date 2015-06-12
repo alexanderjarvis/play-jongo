@@ -6,6 +6,9 @@ import play.Plugin;
 
 public class JongoPlugin extends Plugin {
 
+    public JongoPlugin() {
+    }
+
     public JongoPlugin(Application application) {
     }
 

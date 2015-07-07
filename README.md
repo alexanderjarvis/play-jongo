@@ -1,10 +1,10 @@
-PlayJongo Play 2.3.x Module
+PlayJongo Play 2.4.x Module
 =====================================
 
-This is a Play 2.3.x Module for [Jongo](http://jongo.org/)
+This is a Play 2.4.x Module for [Jongo](http://jongo.org/)
 (a MongoDB Java driver wrapper).
 
-*If you're using Play! 2.2.x or 2.1.x you can use an older version of play-jongo, for 2.2.x use `0.6.0-jongo1.0`, for 2.1.x use `0.5.0-jongo0.4`.*
+*If you're using Play! 2.3.x, 2.2.x or 2.1.x you can use an older version of play-jongo, for 2.3.x use `0.7.1-jongo1.0`, for 2.2.x use `0.6.0-jongo1.0`, for 2.1.x use `0.5.0-jongo0.4`.*
 
 [![Build Status](https://jenkins.inoio.de/job/play-jongo/badge/icon)](http://jenkins.inoio.de/job/play-jongo/)
 
@@ -14,7 +14,7 @@ Installation
 Add the following to your projects Build.scala
 
 	val appDependencies = Seq(
-	  "uk.co.panaxiom" %% "play-jongo" % "0.7.1-jongo1.0"
+	  "uk.co.panaxiom" %% "play-jongo" % "0.8.0-jongo1.0"
 	)
 
 *__Note related to play-jongo with Play 2.2:__ because there were issues reported due to incompatibilities of Play 2.2!, bson4jackson and the current version of jackson,

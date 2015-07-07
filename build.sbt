@@ -6,7 +6,7 @@ organization := "uk.co.panaxiom"
 
 description := "Play 2.4.x Module for Jongo http://jongo.org/"
 
-version := "0.7.1-jongo1.0"
+version := "0.8.0-jongo1.0"
 
 scalaVersion := "2.11.7"
 

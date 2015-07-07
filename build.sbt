@@ -23,6 +23,9 @@ findbugsSettings
 
 javacOptions ++= Seq("-source", "1.6", "-target", "1.6", "-encoding", "UTF-8")
 
+// "-v" needed for more verbose output, otherwise only the number of tests is reported
+testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-v"))
+
 // Maven publishing info
 publishMavenStyle := true
 

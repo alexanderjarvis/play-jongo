@@ -8,7 +8,9 @@ description := "Play 2.4.x Module for Jongo http://jongo.org/"
 
 version := "0.7.1-jongo1.0"
 
-crossScalaVersions := Seq ("2.10.4", "2.11.1")
+scalaVersion := "2.11.7"
+
+crossScalaVersions := Seq ("2.10.5", "2.11.7")
 
 libraryDependencies ++= Seq(
   "org.mongodb" % "mongo-java-driver" % "2.12.2",
@@ -17,11 +19,11 @@ libraryDependencies ++= Seq(
   "org.easytesting" % "fest-assert" % "1.4" % "test"
 )
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
+lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
 findbugsSettings
 
-javacOptions ++= Seq("-source", "1.6", "-target", "1.6", "-encoding", "UTF-8")
+javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-encoding", "UTF-8")
 
 // "-v" needed for more verbose output, otherwise only the number of tests is reported
 testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-v"))

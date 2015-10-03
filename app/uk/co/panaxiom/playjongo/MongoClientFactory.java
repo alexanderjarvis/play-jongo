@@ -36,19 +36,14 @@ public class MongoClientFactory {
         MongoClientURI uri = getClientURI();
 
         MongoClient mongo = new MongoClient(uri);
-        DB db = mongo.getDB(uri.getDatabase());
-
+        DB db = new DB(mongo, uri.getDatabase());
+        
         // Set write concern if configured
         String defaultWriteConcern = config.getString("playjongo.defaultWriteConcern");
         if(defaultWriteConcern != null) {
             db.setWriteConcern(WriteConcern.valueOf(defaultWriteConcern));
         }
 
-        // Authenticate the user if necessary
-        if (uri.getUsername() != null) {
-            db.authenticate(uri.getUsername(), uri.getPassword());
-        }
-        
         return mongo;
     }
 

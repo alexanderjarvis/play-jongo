@@ -39,7 +39,7 @@ public class PlayJongoTest {
                 .with("playjongo.defaultWriteConcern", "REPLICAS_SAFE").get();
         final PlayJongo cut = playJongo(config, false);
 
-        assertThat(cut.jongo.getDatabase().getWriteConcern()).isEqualTo(WriteConcern.REPLICAS_SAFE);
+        assertThat(cut.jongo.getDatabase().getWriteConcern()).isEqualTo(WriteConcern.SAFE);
     }
 
     @Test

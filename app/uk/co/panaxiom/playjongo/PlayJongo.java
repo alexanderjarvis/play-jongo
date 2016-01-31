@@ -1,20 +1,23 @@
 package uk.co.panaxiom.playjongo;
 
-import java.lang.reflect.Constructor;
-
-import org.jongo.Jongo;
-import org.jongo.Mapper;
-import org.jongo.MongoCollection;
-
-import play.Configuration;
-import play.Logger;
-import play.Play;
-
 import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.gridfs.GridFS;
+import org.jongo.Jongo;
+import org.jongo.Mapper;
+import org.jongo.MongoCollection;
+import play.Configuration;
+import play.Logger;
+import play.Play;
+import play.inject.ApplicationLifecycle;
+import play.libs.F;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.lang.reflect.Constructor;
+
+@Singleton
 public class PlayJongo {
 
     private static volatile PlayJongo INSTANCE = null;
@@ -22,6 +25,18 @@ public class PlayJongo {
     MongoClient mongo = null;
     Jongo jongo = null;
     GridFS gridfs = null;
+
+    @Inject
+    public PlayJongo(ApplicationLifecycle lifecycle) {
+        PlayJongo.forceNewInstance();
+
+        lifecycle.addStopHook(()->{
+            if (!Play.isTest()) {
+                PlayJongo.mongo().close();
+            }
+            return F.Promise.pure(null);
+        });
+    }
 
     PlayJongo(Configuration config, ClassLoader classLoader, boolean isTestMode) throws Exception {
         

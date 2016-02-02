@@ -11,7 +11,7 @@ This is a Play 2.4.x Module for [Jongo](http://jongo.org/)
 Installation
 -----------
 
-Add the following to your projects Build.scala
+Add the following to your projects Build.scala (for build.sbt use `libraryDependencies` instead of `appDependencies`):
 
 	val appDependencies = Seq(
 	  "uk.co.panaxiom" %% "play-jongo" % "0.9.0-jongo1.2"

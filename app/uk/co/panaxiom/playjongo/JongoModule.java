@@ -13,7 +13,6 @@ public class JongoModule extends Module {
 
     @Override
     public Seq<Binding<?>> bindings(Environment environment, Configuration configuration) {
-        return seq(bind(PlayJongo.class).to(PlayJongo.class)
-        );
+        return seq(bind(PlayJongo.class).toSelf());
     }
 }

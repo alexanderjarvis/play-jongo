@@ -7,38 +7,40 @@ import com.mongodb.gridfs.GridFS;
 import org.jongo.Jongo;
 import org.jongo.Mapper;
 import org.jongo.MongoCollection;
-import play.Configuration;
-import play.Logger;
-import play.Play;
+import play.*;
 import play.inject.ApplicationLifecycle;
-import play.libs.F;
+
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.lang.reflect.Constructor;
+import java.util.concurrent.CompletableFuture;
 
 @Singleton
 public class PlayJongo {
-
-    private static volatile PlayJongo INSTANCE = null;
 
     MongoClient mongo = null;
     Jongo jongo = null;
     GridFS gridfs = null;
 
-    @Inject
-    public PlayJongo(ApplicationLifecycle lifecycle) {
-        PlayJongo.forceNewInstance();
 
+    @Inject
+    public PlayJongo(ApplicationLifecycle lifecycle, Environment env, Configuration config) {
+
+        try {
+            configure(config, env.classLoader(), env.isTest());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         lifecycle.addStopHook(()->{
-            if (!Play.isTest()) {
-                PlayJongo.mongo().close();
+            if (env.isTest()) {
+                mongo().close();
             }
-            return F.Promise.pure(null);
+            return CompletableFuture.completedFuture(null);
         });
     }
 
-    PlayJongo(Configuration config, ClassLoader classLoader, boolean isTestMode) throws Exception {
+    private void configure(Configuration config, ClassLoader classLoader, boolean isTestMode) throws Exception {
         
         String clientFactoryName = config.getString("playjongo.mongoClientFactory");
         MongoClientFactory factory = getMongoClientFactory(clientFactoryName, config, isTestMode);
@@ -95,43 +97,24 @@ public class PlayJongo {
         return factory.create();
     }
 
-    public static PlayJongo getInstance() {
-        if (INSTANCE == null) {
-            synchronized (PlayJongo.class) {
-                if (INSTANCE == null) {
-                    try {
-                        INSTANCE = new PlayJongo(Play.application().configuration(), Play.application().classloader(), Play.isTest());
-                    } catch (Exception e) {
-                        Logger.error(e.getClass().getSimpleName(), e);
-                    }
-                }
-            }
-        }
-        return INSTANCE;
+
+    public Mongo mongo() {
+        return mongo;
     }
 
-    public static void forceNewInstance() {
-        INSTANCE = null;
-        getInstance();
+    public Jongo jongo() {
+        return jongo;
     }
 
-    public static Mongo mongo() {
-        return getInstance().mongo;
+    public GridFS gridfs() {
+        return gridfs;
     }
 
-    public static Jongo jongo() {
-        return getInstance().jongo;
+    public MongoCollection getCollection(String name) {
+        return jongo.getCollection(name);
     }
 
-    public static GridFS gridfs() {
-        return getInstance().gridfs;
-    }
-
-    public static MongoCollection getCollection(String name) {
-        return getInstance().jongo.getCollection(name);
-    }
-
-    public static DB getDatabase() {
-        return getInstance().jongo.getDatabase();
+    public DB getDatabase() {
+        return jongo.getDatabase();
     }
 }

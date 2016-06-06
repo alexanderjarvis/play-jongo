@@ -4,7 +4,7 @@ name := "play-jongo"
 
 organization := "uk.co.panaxiom"
 
-description := "Play 2.4.x Module for Jongo http://jongo.org/"
+description := "Play 2.5.x Module for Jongo http://jongo.org/"
 
 version := "1.0.2-jongo1.2"
 

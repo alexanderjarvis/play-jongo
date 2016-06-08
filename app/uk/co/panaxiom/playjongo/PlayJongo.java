@@ -40,6 +40,10 @@ public class PlayJongo {
         });
     }
 
+    PlayJongo(Configuration config, ClassLoader classLoader, boolean isTestMode) throws Exception {
+        configure(config,classLoader,isTestMode);
+    }
+
     private void configure(Configuration config, ClassLoader classLoader, boolean isTestMode) throws Exception {
         
         String clientFactoryName = config.getString("playjongo.mongoClientFactory");

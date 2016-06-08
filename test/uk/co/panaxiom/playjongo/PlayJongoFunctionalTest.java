@@ -6,34 +6,16 @@ import org.junit.*;
 
 import play.api.Play;
 import play.test.FakeApplication;
+import play.test.WithApplication;
+
 import static play.test.Helpers.*;
 
 /**
  * Functional tests, with a running fake app.
  */
-public class PlayJongoFunctionalTest {
+public class PlayJongoFunctionalTest extends WithApplication {
 
     private static final int PORT = 3333;
-    private static FakeApplication app;
-
-    @BeforeClass
-    public static void setup() {
-        try {
-            app = fakeApplication();
-            Play.start(app.getWrappedApplication());
-        } catch (final RuntimeException e) {
-            // If we throw this exception,
-            // all tests in this class are skipped
-            // without any error (in sbt).
-            // This way they will at least fail.
-            e.printStackTrace();
-        }
-    }
-
-    @AfterClass
-    public static void stopApp() {
-        Play.stop(app.getWrappedApplication());
-    }
 
     @Test
     public void testInjection() throws Exception {

@@ -10,8 +10,6 @@ version := "2.0.0-jongo1.3"
 
 scalaVersion := "2.11.7"
 
-crossScalaVersions := Seq ("2.10.5", "2.11.7")
-
 libraryDependencies ++= Seq(
   "org.mongodb" % "mongo-java-driver" % "3.2.2",
   "org.jongo" % "jongo" % "1.3.0",

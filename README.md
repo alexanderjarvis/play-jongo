@@ -1,10 +1,14 @@
-PlayJongo Play 2.4.x Module
+PlayJongo Play 2.5.x Module
 =====================================
 
-This is a Play 2.4.x Module for [Jongo](http://jongo.org/)
+This is a Play 2.5.x Module for [Jongo](http://jongo.org/)
 (a MongoDB Java driver wrapper).
 
-*If you're using Play! 2.3.x, 2.2.x or 2.1.x you can use an older version of play-jongo, for 2.3.x use `0.7.1-jongo1.0`, for 2.2.x use `0.6.0-jongo1.0`, for 2.1.x use `0.5.0-jongo0.4`.*
+*If you're using Play! 2.4.x, 2.3.x, 2.2.x or 2.1.x you can use an older version of play-jongo:*
+* for 2.4.x use `1.0.1-jongo1.2`
+* for 2.3.x use `0.7.1-jongo1.0`
+* for 2.2.x use `0.6.0-jongo1.0`
+* for 2.1.x use `0.5.0-jongo0.4`
 
 [![Build Status](https://jenkins.inoio.de/job/play-jongo/badge/icon)](http://jenkins.inoio.de/job/play-jongo/)
 
@@ -14,7 +18,7 @@ Installation
 Add the following to your projects Build.scala (for build.sbt use `libraryDependencies` instead of `appDependencies`):
 
 	val appDependencies = Seq(
-	  "uk.co.panaxiom" %% "play-jongo" % "1.0.1-jongo1.2"
+	  "uk.co.panaxiom" %% "play-jongo" % "2.0.0-jongo1.3"
 	)
 
 *__Note related to play-jongo with Play 2.2:__ because there were issues reported due to incompatibilities of Play 2.2!, bson4jackson and the current version of jackson,
@@ -109,6 +113,8 @@ and configures the jongo/jackson mapper with the `DefaultScalaModule`. To use th
 
 Usage
 -----
+
+*TODO: needs to be updated for play-jongo 2+*
 
 To use this module you just use the PlayJongo class which manages your Mongo and Jongo instances for you. It provides the same method calls as the Jongo object as detailed in the Jongo documentation: http://jongo.org/ .
 

@@ -13,7 +13,7 @@ scalaVersion := "2.11.7"
 crossScalaVersions := Seq ("2.10.5", "2.11.7")
 
 libraryDependencies ++= Seq(
-  "org.mongodb" % "mongo-java-driver" % "3.0.2",
+  "org.mongodb" % "mongo-java-driver" % "3.2.2",
   "org.jongo" % "jongo" % "1.2",
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.7.4" % "optional",
   "org.easytesting" % "fest-assert" % "1.4" % "test"

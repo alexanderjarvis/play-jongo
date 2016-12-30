@@ -138,7 +138,6 @@ public class Users  {
 
     private String email;
 
-    private String password;
     public ObjectId getId() {
         return _id;
     }
@@ -180,13 +179,13 @@ public class UsersRepository {
 
     @Inject
     public PlayJongo jongo;
-
-    public MongoCollection<Users> users() {
-        return jongo.jongo.getCollection("DocBox.users", Users.class);
+ 
+    public MongoCollection users() {
+        return jongo.getCollection("DB.users");
     }
-
+   
     public Users findById(String id) {
-        return users().find(jongo.jongo.query("{_id: #}", new ObjectId(id))).first();
+    	return users().findOne("{_id: #}", new ObjectId(id)).as(Users.class);
     }
 }
 ```

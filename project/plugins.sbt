@@ -1,10 +1,7 @@
 // Comment to get more information during initialization
 logLevel := Level.Warn
 
-// The Typesafe repository
-resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/"
-
 // Use the Play sbt plugin for Play projects
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.3.1")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.5.3")
 
-addSbtPlugin("de.johoop" % "findbugs4sbt" % "1.3.0")
+addSbtPlugin("de.johoop" % "findbugs4sbt" % "1.4.0")

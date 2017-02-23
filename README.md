@@ -180,6 +180,17 @@ public class User {
 }
 ```
 
+Fongo Support
+-------
+
+To use [Fongo](https://github.com/fakemongo/fongo) instead of regular MongoDB, say, for your unit tests, you can enable it by adding the following configuration in your `conf/application.conf` like this:
+
+    playjongo.useFongo = true
+
+The default DB name is `fongodb`. You can override it with
+
+    playjongo.fongo.db = "myDatabaseName"
+
 Contact
 -------
 

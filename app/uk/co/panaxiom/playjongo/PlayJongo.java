@@ -1,5 +1,6 @@
 package uk.co.panaxiom.playjongo;
 
+import com.github.fakemongo.Fongo;
 import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
@@ -7,9 +8,9 @@ import com.mongodb.gridfs.GridFS;
 import org.jongo.Jongo;
 import org.jongo.Mapper;
 import org.jongo.MongoCollection;
-import play.*;
+import play.Configuration;
+import play.Environment;
 import play.inject.ApplicationLifecycle;
-
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -32,7 +33,7 @@ public class PlayJongo {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        lifecycle.addStopHook(()->{
+        lifecycle.addStopHook(() -> {
             if (env.isTest()) {
                 mongo().close();
             }
@@ -41,20 +42,28 @@ public class PlayJongo {
     }
 
     PlayJongo(Configuration config, ClassLoader classLoader, boolean isTestMode) throws Exception {
-        configure(config,classLoader,isTestMode);
+        configure(config, classLoader, isTestMode);
     }
 
     private void configure(Configuration config, ClassLoader classLoader, boolean isTestMode) throws Exception {
-        
-        String clientFactoryName = config.getString("playjongo.mongoClientFactory");
-        MongoClientFactory factory = getMongoClientFactory(clientFactoryName, config, isTestMode);
-        mongo = factory.createClient();
 
-        if (mongo == null) {
-            throw new IllegalStateException("No MongoClient was created by instance of "+ factory.getClass().getName());
+        DB db;
+        if (config.getBoolean("playjongo.useFongo", false)) {
+
+            db = new Fongo("in-memory").getDB(config.getString("playjongo.fongo.db", "fongodb"));
+
+        } else {
+
+            String clientFactoryName = config.getString("playjongo.mongoClientFactory");
+            MongoClientFactory factory = getMongoClientFactory(clientFactoryName, config, isTestMode);
+            mongo = factory.createClient();
+
+            if (mongo == null) {
+                throw new IllegalStateException("No MongoClient was created by instance of " + factory.getClass().getName());
+            }
+
+            db = mongo.getDB(factory.getDBName());
         }
-
-        DB db = mongo.getDB(factory.getDBName());
 
         jongo = new Jongo(db, createMapper(config, classLoader));
 
@@ -63,7 +72,7 @@ public class PlayJongo {
         }
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     protected MongoClientFactory getMongoClientFactory(String className, Configuration config, boolean isTestMode) throws Exception {
 
         if (className != null) {

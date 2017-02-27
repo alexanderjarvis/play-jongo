@@ -7,9 +7,9 @@ import com.mongodb.gridfs.GridFS;
 import org.jongo.Jongo;
 import org.jongo.Mapper;
 import org.jongo.MongoCollection;
-import play.*;
+import play.Configuration;
+import play.Environment;
 import play.inject.ApplicationLifecycle;
-
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -23,7 +23,13 @@ public class PlayJongo {
     Jongo jongo = null;
     GridFS gridfs = null;
 
-
+    /**
+     * Constructor. This will add a stop hook to the application's lifecycle events.
+     *
+     * @param lifecycle The Application lifecycle register, to hook into the stop event.
+     * @param env       The environment for the application.
+     * @param config    The current application configuration.
+     */
     @Inject
     public PlayJongo(ApplicationLifecycle lifecycle, Environment env, Configuration config) {
 
@@ -32,7 +38,7 @@ public class PlayJongo {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        lifecycle.addStopHook(()->{
+        lifecycle.addStopHook(() -> {
             if (env.isTest()) {
                 mongo().close();
             }
@@ -40,30 +46,43 @@ public class PlayJongo {
         });
     }
 
-    PlayJongo(Configuration config, ClassLoader classLoader, boolean isTestMode) throws Exception {
-        configure(config,classLoader,isTestMode);
+    /**
+     * Constructor for situations where DI is missing and/or application's lifecycle is not available.
+     *
+     * @param configuration The current application configuration.
+     * @param classLoader   The class loader.
+     * @param isTestMode    Set it to {@code TRUE} iff the application is in TEST mode. That is, when {@link Environment#isTest()} is {@code TRUE}.
+     * @throws Exception
+     */
+    public PlayJongo(Configuration configuration, ClassLoader classLoader, boolean isTestMode) throws Exception {
+        configure(configuration, classLoader, isTestMode);
     }
 
     private void configure(Configuration config, ClassLoader classLoader, boolean isTestMode) throws Exception {
-        
-        String clientFactoryName = config.getString("playjongo.mongoClientFactory");
-        MongoClientFactory factory = getMongoClientFactory(clientFactoryName, config, isTestMode);
-        mongo = factory.createClient();
-
-        if (mongo == null) {
-            throw new IllegalStateException("No MongoClient was created by instance of "+ factory.getClass().getName());
-        }
-
-        DB db = mongo.getDB(factory.getDBName());
-
+        DB db = getDatabase(config, isTestMode);
         jongo = new Jongo(db, createMapper(config, classLoader));
-
         if (config.getBoolean("playjongo.gridfs.enabled", false)) {
             gridfs = new GridFS(jongo.getDatabase());
         }
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    /**
+     * @param config
+     * @param isTestMode
+     * @return
+     * @throws Exception
+     */
+    protected DB getDatabase(Configuration config, boolean isTestMode) throws Exception {
+        String clientFactoryName = config.getString("playjongo.mongoClientFactory");
+        MongoClientFactory factory = getMongoClientFactory(clientFactoryName, config, isTestMode);
+        mongo = factory.createClient();
+        if (mongo == null) {
+            throw new IllegalStateException("No MongoClient was created by instance of " + factory.getClass().getName());
+        }
+        return mongo.getDB(factory.getDBName());
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
     protected MongoClientFactory getMongoClientFactory(String className, Configuration config, boolean isTestMode) throws Exception {
 
         if (className != null) {

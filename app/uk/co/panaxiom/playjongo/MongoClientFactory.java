@@ -1,11 +1,10 @@
 package uk.co.panaxiom.playjongo;
 
-import play.Configuration;
-
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.WriteConcern;
+import com.typesafe.config.Config;
 
 /**
  * The default MongoClient factory class for PlayJongo.
@@ -14,14 +13,14 @@ import com.mongodb.WriteConcern;
  */
 public class MongoClientFactory {
 
-    protected Configuration config;
+    protected Config config;
     protected boolean isTest;
 
-    public MongoClientFactory(Configuration config) {
+    public MongoClientFactory(Config config) {
         this.config = config;
     }
 
-    protected MongoClientFactory(Configuration config, boolean isTest) {
+    protected MongoClientFactory(Config config, boolean isTest) {
         this.config = config;
         this.isTest = isTest;
     }
@@ -39,8 +38,8 @@ public class MongoClientFactory {
         DB db = new DB(mongo, uri.getDatabase());
         
         // Set write concern if configured
-        String defaultWriteConcern = config.getString("playjongo.defaultWriteConcern");
-        if(defaultWriteConcern != null) {
+        if (config.hasPath("playjongo.defaultWriteConcern")) {
+            String defaultWriteConcern = config.getString("playjongo.defaultWriteConcern");
             db.setWriteConcern(WriteConcern.valueOf(defaultWriteConcern));
         }
 
@@ -59,8 +58,8 @@ public class MongoClientFactory {
     protected MongoClientURI getClientURI() {
         MongoClientURI uri = new MongoClientURI(
                 isTest
-                    ? config.getString("playjongo.test-uri", "mongodb://127.0.0.1:27017/test")
-                    : config.getString("playjongo.uri", "mongodb://127.0.0.1:27017/play"));
+                    ? config.getString("playjongo.test-uri")
+                    : config.getString("playjongo.uri"));
         return uri;
     }
 }

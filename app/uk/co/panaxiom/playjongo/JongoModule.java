@@ -7,7 +7,7 @@ import play.api.inject.Module;
 import scala.collection.Seq;
 
 /**
- * Play2.4 Module implementation.
+ * Play 2.6 Module implementation.
  */
 public class JongoModule extends Module {
 

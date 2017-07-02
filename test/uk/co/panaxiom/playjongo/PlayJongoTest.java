@@ -1,19 +1,15 @@
 package uk.co.panaxiom.playjongo;
 
-import static org.fest.assertions.Assertions.assertThat;
+import com.mongodb.ServerAddress;
+import com.mongodb.WriteConcern;
+import com.typesafe.config.ConfigFactory;
+import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
-
-import play.Configuration;
-
-import static uk.co.panaxiom.playjongo.PlayJongoTest.MapBuilder.*;
-
-import com.mongodb.ServerAddress;
-import com.mongodb.WriteConcern;
-import com.typesafe.config.ConfigFactory;
+import static org.fest.assertions.Assertions.assertThat;
+import static uk.co.panaxiom.playjongo.PlayJongoTest.MapBuilder.mapBuilder;
 
 public class PlayJongoTest {
     
@@ -61,7 +57,7 @@ public class PlayJongoTest {
     }
     
     private static PlayJongo playJongo(Map<String, ? extends Object> config, boolean isTest) throws Exception {
-        return new PlayJongo(new Configuration(ConfigFactory.parseMap(config)), classLoader(), isTest);
+        return new PlayJongo (ConfigFactory.load(ConfigFactory.parseMap(config)), classLoader(), isTest);
     }
 
     private static ClassLoader classLoader() {

@@ -127,7 +127,7 @@ The package structure should be similar to the following:
 Model example:
 
 ```java
-public class Users  {
+public class User  {
 
     @JsonProperty("_id")
     private ObjectId _id;
@@ -175,17 +175,17 @@ public class Users  {
 Repository example:
 
 ```java
-public class UsersRepository {
+public class UserRepository {
 
     @Inject
-    public PlayJongo jongo;
+    private PlayJongo jongo;
  
-    public MongoCollection users() {
+    private MongoCollection user() {
         return jongo.getCollection("DB.users");
     }
    
     public Users findById(String id) {
-    	return users().findOne("{_id: #}", new ObjectId(id)).as(Users.class);
+    	return user().findOne("{_id: #}", new ObjectId(id)).as(User.class);
     }
 }
 ```
@@ -193,13 +193,13 @@ public class UsersRepository {
 Controller example:
 
 ```java
-public class User extends Controller {
+public class UserController extends Controller {
 
     @Inject
-    private UsersRepository users;
+    private UserRepository user;
 
     public Result modifyUser(String id) {
-        Users u = users.findById(id);
+        Users u = user.findById(id);
         return ok(modifyUser.render(u));
     }
 }

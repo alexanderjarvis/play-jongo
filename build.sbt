@@ -13,7 +13,7 @@ scalaVersion := "2.12.2"
 libraryDependencies ++= Seq(
   "org.mongodb" % "mongo-java-driver" % "3.4.2",
   "org.jongo" % "jongo" % "1.3.0",
-  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.7.9" % "optional",
+  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.8.9" % "optional",
   "org.easytesting" % "fest-assert" % "1.4" % "test"
 )
 

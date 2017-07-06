@@ -193,6 +193,7 @@ public class UserRepository {
 Controller example:
 
 ```java
+import views.html.modifyUserView;
 public class UserController extends Controller {
 
     @Inject
@@ -200,7 +201,7 @@ public class UserController extends Controller {
 
     public Result modifyUser(String id) {
         Users u = user.findById(id);
-        return ok(modifyUser.render(u));
+        return ok(modifyUserView.render(u));
     }
 }
 ```

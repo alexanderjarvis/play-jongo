@@ -1,14 +1,14 @@
 package uk.co.panaxiom.playjongo;
 
-import play.Configuration;
+import com.typesafe.config.Config;
 
 public class TestMongoClientFactory extends MongoClientFactory {
 
-    public TestMongoClientFactory(Configuration config) {
+    public TestMongoClientFactory(Config config) {
         super(config);
     }
 
-    public TestMongoClientFactory(Configuration config, boolean isTest) {
+    public TestMongoClientFactory(Config config, boolean isTest) {
         super(config, isTest);
     }
 

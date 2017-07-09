@@ -4,12 +4,12 @@ import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.mongodb.gridfs.GridFS;
+import com.typesafe.config.Config;
 import org.jongo.Jongo;
 import org.jongo.Mapper;
 import org.jongo.MongoCollection;
-import play.*;
+import play.Environment;
 import play.inject.ApplicationLifecycle;
-
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -25,7 +25,7 @@ public class PlayJongo {
 
 
     @Inject
-    public PlayJongo(ApplicationLifecycle lifecycle, Environment env, Configuration config) {
+    public PlayJongo(ApplicationLifecycle lifecycle, Environment env, Config config) {
 
         try {
             configure(config, env.classLoader(), env.isTest());
@@ -40,11 +40,11 @@ public class PlayJongo {
         });
     }
 
-    PlayJongo(Configuration config, ClassLoader classLoader, boolean isTestMode) throws Exception {
+    PlayJongo(Config config, ClassLoader classLoader, boolean isTestMode) throws Exception {
         configure(config,classLoader,isTestMode);
     }
 
-    private void configure(Configuration config, ClassLoader classLoader, boolean isTestMode) throws Exception {
+    private void configure(Config config, ClassLoader classLoader, boolean isTestMode) throws Exception {
         
         String clientFactoryName = config.getString("playjongo.mongoClientFactory");
         MongoClientFactory factory = getMongoClientFactory(clientFactoryName, config, isTestMode);
@@ -58,15 +58,15 @@ public class PlayJongo {
 
         jongo = new Jongo(db, createMapper(config, classLoader));
 
-        if (config.getBoolean("playjongo.gridfs.enabled", false)) {
+        if (config.getBoolean("playjongo.gridfs.enabled")) {
             gridfs = new GridFS(jongo.getDatabase());
         }
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    protected MongoClientFactory getMongoClientFactory(String className, Configuration config, boolean isTestMode) throws Exception {
+    protected MongoClientFactory getMongoClientFactory(String className, Config config, boolean isTestMode) throws Exception {
 
-        if (className != null) {
+        if (!className.equals("uk.co.panaxiom.playjongo.MongoClientFactory")) {
             try {
                 Class factoryClass = Class.forName(className, true, Thread.currentThread().getContextClassLoader());
                 if (!MongoClientFactory.class.isAssignableFrom(factoryClass)) {
@@ -76,7 +76,7 @@ public class PlayJongo {
 
                 Constructor constructor = null;
                 try {
-                    constructor = factoryClass.getConstructor(Configuration.class);
+                    constructor = factoryClass.getConstructor(Config.class);
                 } catch (Exception e) {
                     // can't use that one
                 }
@@ -91,9 +91,8 @@ public class PlayJongo {
         return new MongoClientFactory(config, isTestMode);
     }
 
-    private Mapper createMapper(Configuration config, ClassLoader classLoader) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-        final String factoryClassName = config.getString("playjongo.mapperfactory",
-                JongoMapperFactory.DefaultFactory.class.getName());
+    private Mapper createMapper(Config config, ClassLoader classLoader) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+        final String factoryClassName = config.getString("playjongo.mapperfactory");
         JongoMapperFactory factory = (JongoMapperFactory) Class.forName(
                 factoryClassName,
                 true,

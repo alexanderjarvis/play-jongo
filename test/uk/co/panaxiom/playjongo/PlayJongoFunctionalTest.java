@@ -1,14 +1,9 @@
 package uk.co.panaxiom.playjongo;
 
-import static org.fest.assertions.Assertions.assertThat;
-
 import org.junit.*;
-
-import play.api.Play;
-import play.test.FakeApplication;
 import play.test.WithApplication;
 
-import static play.test.Helpers.*;
+import static org.fest.assertions.Assertions.assertThat;
 
 /**
  * Functional tests, with a running fake app.

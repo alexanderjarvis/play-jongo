@@ -184,7 +184,7 @@ public class UserRepository {
         return jongo.getCollection("DB.users");
     }
    
-    public Users findById(String id) {
+    public User findById(String id) {
     	return user().findOne("{_id: #}", new ObjectId(id)).as(User.class);
     }
 }
@@ -200,7 +200,7 @@ public class UserController extends Controller {
     private UserRepository user;
 
     public Result modifyUser(String id) {
-        Users u = user.findById(id);
+        User u = user.findById(id);
         return ok(modifyUserView.render(u));
     }
 }

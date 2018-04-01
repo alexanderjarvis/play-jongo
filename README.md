@@ -19,7 +19,7 @@ Installation
 Add the following to your projects Build.scala (for build.sbt use `libraryDependencies` instead of `appDependencies`):
 
 	val appDependencies = Seq(
-	  "uk.co.panaxiom" %% "play-jongo" % "2.0.0-jongo1.3"
+	  "uk.co.panaxiom" %% "play-jongo" % "2.1.0-jongo1.3"
 	)
 
 *__Note related to play-jongo with Play 2.2:__ because there were issues reported due to incompatibilities of Play 2.2!, bson4jackson and the current version of jackson,

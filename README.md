@@ -115,7 +115,100 @@ and configures the jongo/jackson mapper with the `DefaultScalaModule`. To use th
 Usage
 -----
 
-*TODO: needs to be updated for play-jongo 2+*
+**Play Framework 2.5.x**
+
+A way to use PlayJongo is to create a repositories package containing repository classes, one for each model. A repository class contains the PlayJongo injection, the collection to use and all methods to access to the collection members.
+The package structure should be similar to the following:
+```
+|- controllers
+|- models
+|- repositories
+```
+
+Model example:
+
+```java
+public class User  {
+
+    @JsonProperty("_id")
+    private ObjectId _id;
+
+    private String firstname;
+
+    private String lastname;
+
+    private String email;
+
+    public ObjectId getId() {
+        return _id;
+    }
+
+    public void setId(ObjectId _id) {
+        this._id = _id;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+}
+```
+
+Repository example:
+
+```java
+public class UserRepository {
+
+    @Inject
+    private PlayJongo jongo;
+ 
+    private MongoCollection user() {
+        return jongo.getCollection("DB.users");
+    }
+   
+    public User findById(String id) {
+    	return user().findOne("{_id: #}", new ObjectId(id)).as(User.class);
+    }
+}
+```
+
+Controller example:
+
+```java
+import views.html.modifyUserView;
+public class UserController extends Controller {
+
+    @Inject
+    private UserRepository user;
+
+    public Result modifyUser(String id) {
+        User u = user.findById(id);
+        return ok(modifyUserView.render(u));
+    }
+}
+```
+
+
+**Play Framework 2.x.x**
 
 To use this module you just use the PlayJongo class which manages your Mongo and Jongo instances for you. It provides the same method calls as the Jongo object as detailed in the Jongo documentation: http://jongo.org/ .
 

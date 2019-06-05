@@ -4,6 +4,7 @@ import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.WriteConcern;
+import com.mongodb.client.MongoDatabase;
 import com.typesafe.config.Config;
 
 /**
@@ -29,18 +30,18 @@ public class MongoClientFactory {
      * Creates and returns a new instance of a MongoClient.
      *
      * @return a new MongoClient
-     * @throws Exception
      */
-    public MongoClient createClient() throws Exception {
+    public MongoClient createClient() {
         MongoClientURI uri = getClientURI();
 
         MongoClient mongo = new MongoClient(uri);
-        DB db = new DB(mongo, uri.getDatabase());
-        
+
+        MongoDatabase db = mongo.getDatabase(uri.getDatabase());
+
         // Set write concern if configured
         if (config.hasPath("playjongo.defaultWriteConcern")) {
             String defaultWriteConcern = config.getString("playjongo.defaultWriteConcern");
-            db.setWriteConcern(WriteConcern.valueOf(defaultWriteConcern));
+            db.withWriteConcern(WriteConcern.valueOf(defaultWriteConcern));
         }
 
         return mongo;

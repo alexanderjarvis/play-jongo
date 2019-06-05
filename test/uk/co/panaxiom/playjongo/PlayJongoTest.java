@@ -12,15 +12,15 @@ import static org.fest.assertions.Assertions.assertThat;
 import static uk.co.panaxiom.playjongo.PlayJongoTest.MapBuilder.mapBuilder;
 
 public class PlayJongoTest {
-    
+
     @Test
     public void testMongoUriConfig() throws Exception {
         Map<String, String> config = mapBuilder("playjongo.uri", "mongodb://localhost:27017/foo").get();
         final PlayJongo cut = playJongo(config, false);
-        
+
         assertMongoProperties(cut, "localhost", 27017, "foo");
     }
-    
+
     @Test
     public void testMongoTestUriConfig() throws Exception {
         Map<String, String> config = mapBuilder("playjongo.test-uri", "mongodb://localhost:27017/bar").get();
@@ -28,14 +28,14 @@ public class PlayJongoTest {
 
         assertMongoProperties(cut, "localhost", 27017, "bar");
     }
-    
+
     @Test
     public void testMongoWriteConcern() throws Exception {
         Map<String, String> config = mapBuilder("playjongo.uri", "mongodb://localhost:27017/foo")
                 .with("playjongo.defaultWriteConcern", "REPLICAS_SAFE").get();
         final PlayJongo cut = playJongo(config, false);
 
-        assertThat(cut.jongo.getDatabase().getWriteConcern()).isEqualTo(WriteConcern.SAFE);
+        assertThat(cut.jongo.getDatabase().getWriteConcern()).isEqualTo(WriteConcern.ACKNOWLEDGED);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class PlayJongoTest {
         assertThat(server0.getPort()).isEqualTo(port);
         assertThat(cut.jongo.getDatabase().getName()).isEqualTo(dbName);
     }
-    
+
     private static PlayJongo playJongo(Map<String, ? extends Object> config, boolean isTest) throws Exception {
         return new PlayJongo (ConfigFactory.load(ConfigFactory.parseMap(config)), classLoader(), isTest);
     }
@@ -63,7 +63,7 @@ public class PlayJongoTest {
     private static ClassLoader classLoader() {
         return Thread.currentThread().getContextClassLoader();
     }
-    
+
     static class MapBuilder<K, V> {
         private final Map<K, V> m = new HashMap<K, V>();
         public MapBuilder(K key, V value) {

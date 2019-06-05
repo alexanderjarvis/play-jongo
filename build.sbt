@@ -1,4 +1,4 @@
-import de.johoop.findbugs4sbt.FindBugs._
+import com.github.sbt.findbugs.FindbugsPlugin._
 
 name := "play-jongo"
 
@@ -6,22 +6,22 @@ organization := "uk.co.panaxiom"
 
 description := "Play 2.6.x Module for Jongo http://jongo.org/"
 
-version := "2.1.0-jongo1.3"
+version := "2.0.1-jongo1.4"
 
-scalaVersion := "2.12.5"
+scalaVersion := "2.12.8"
 
 libraryDependencies ++= Seq(
-  "org.mongodb" % "mongo-java-driver" % "3.4.2",
-  "org.jongo" % "jongo" % "1.3.0",
-  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.8.9" % "optional",
-  "org.easytesting" % "fest-assert" % "1.4" % "test"
+  "org.mongodb" % "mongo-java-driver" % "3.10.2",
+  "org.jongo" % "jongo" % "1.4.0",
+  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.9.9" % "optional",
+  "org.easytesting" % "fest-assert" % "1.4" % Test,
+  "junit" % "junit" % "4.12" % Test,
+  "com.novocode" % "junit-interface" % "0.11" % Test
 )
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
-findbugsSettings
-
-javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-encoding", "UTF-8")
+javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-encoding", "UTF-8", "-Xlint:deprecation")
 
 // "-v" needed for more verbose output, otherwise only the number of tests is reported
 testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-v"))

@@ -19,7 +19,7 @@ Installation
 Add the following to your projects Build.scala (for build.sbt use `libraryDependencies` instead of `appDependencies`):
 
 	val appDependencies = Seq(
-	  "uk.co.panaxiom" %% "play-jongo" % "2.0.0-jongo1.3"
+	  "uk.co.panaxiom" %% "play-jongo" % "2.1.0-jongo1.3"
 	)
 
 *__Note related to play-jongo with Play 2.2:__ because there were issues reported due to incompatibilities of Play 2.2!, bson4jackson and the current version of jackson,
@@ -115,7 +115,99 @@ and configures the jongo/jackson mapper with the `DefaultScalaModule`. To use th
 Usage
 -----
 
-*TODO: needs to be updated for play-jongo 2+*
+**Play Framework 2.5.x**
+
+A way to use PlayJongo is to create a repositories package containing repository classes, one for each model. A repository class contains the PlayJongo injection, the collection to use and all methods to access to the collection members.
+The package structure should be similar to the following:
+```
+|- controllers
+|- models
+|- repositories
+```
+
+Model example:
+
+```java
+public class Users  {
+
+    @JsonProperty("_id")
+    private ObjectId _id;
+
+    private String firstname;
+
+    private String lastname;
+
+    private String email;
+
+    public ObjectId getId() {
+        return _id;
+    }
+
+    public void setId(ObjectId _id) {
+        this._id = _id;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+}
+```
+
+Repository example:
+
+```java
+public class UsersRepository {
+
+    @Inject
+    public PlayJongo jongo;
+ 
+    public MongoCollection users() {
+        return jongo.getCollection("DB.users");
+    }
+   
+    public Users findById(String id) {
+    	return users().findOne("{_id: #}", new ObjectId(id)).as(Users.class);
+    }
+}
+```
+
+Controller example:
+
+```java
+public class User extends Controller {
+
+    @Inject
+    private UsersRepository users;
+
+    public Result modifyUser(String id) {
+        Users u = users.findById(id);
+        return ok(modifyUser.render(u));
+    }
+}
+```
+
+
+**Play Framework 2.x.x**
 
 To use this module you just use the PlayJongo class which manages your Mongo and Jongo instances for you. It provides the same method calls as the Jongo object as detailed in the Jongo documentation: http://jongo.org/ .
 

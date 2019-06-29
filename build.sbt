@@ -4,13 +4,13 @@ organization := "uk.co.panaxiom"
 
 description := "Play 2.6+ Module for Jongo http://jongo.org/"
 
-version := "2.1.0-jongo1.3"
+version := "2.2.0-jongo1.4"
 
 scalaVersion := "2.12.8"
 
 libraryDependencies ++= Seq(
   "org.mongodb" % "mongo-java-driver" % "3.5.0",
-  "org.jongo" % "jongo" % "1.3.0",
+  "org.jongo" % "jongo" % "1.4.0",
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.9.9" % "optional",
   "org.assertj" % "assertj-core" % "3.12.2" % Test
 )

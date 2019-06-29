@@ -1,3 +1,5 @@
+import com.github.sbt.findbugs.FindbugsPlugin._
+
 name := "play-jongo"
 
 organization := "uk.co.panaxiom"
@@ -18,7 +20,7 @@ libraryDependencies ++= Seq(
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
-javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-encoding", "UTF-8")
+javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-encoding", "UTF-8", "-Xlint:deprecation")
 
 // "-v" needed for more verbose output, otherwise only the number of tests is reported
 testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-v"))

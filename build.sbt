@@ -14,7 +14,7 @@ libraryDependencies ++= Seq(
   "org.mongodb" % "mongo-java-driver" % "3.4.2",
   "org.jongo" % "jongo" % "1.3.0",
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.8.9" % "optional",
-  "org.easytesting" % "fest-assert" % "1.4" % "test"
+  "org.assertj" % "assertj-core" % "3.12.2" % Test
 )
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)

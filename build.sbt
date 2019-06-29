@@ -1,5 +1,3 @@
-import de.johoop.findbugs4sbt.FindBugs._
-
 name := "play-jongo"
 
 organization := "uk.co.panaxiom"
@@ -18,8 +16,6 @@ libraryDependencies ++= Seq(
 )
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
-
-findbugsSettings
 
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-encoding", "UTF-8")
 

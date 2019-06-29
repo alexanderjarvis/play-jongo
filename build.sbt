@@ -7,6 +7,7 @@ description := "Play 2.6+ Module for Jongo http://jongo.org/"
 version := "2.2.0-jongo1.4"
 
 scalaVersion := "2.12.8"
+crossScalaVersions := Seq("2.12.8", "2.13.0")
 
 libraryDependencies ++= Seq(
   "org.mongodb" % "mongo-java-driver" % "3.5.0",

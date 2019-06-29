@@ -1,7 +1,7 @@
-PlayJongo Play 2.6.x Module
+PlayJongo Play 2.6+ Module
 =====================================
 
-This is a Play 2.6.x Module for [Jongo](http://jongo.org/)
+This is a Play 2.6+ Module for [Jongo](http://jongo.org/)
 (a MongoDB Java driver wrapper).
 
 *If you're using Play! 2.5.x, 2.4.x, 2.3.x, 2.2.x or 2.1.x you can use an older version of play-jongo:*

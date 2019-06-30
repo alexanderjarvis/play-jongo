@@ -6,7 +6,7 @@ organization := "uk.co.panaxiom"
 
 description := "Play 2.6+ Module for Jongo http://jongo.org/"
 
-version := "2.2.0-jongo1.4"
+version := "2.2.0-jongo1.4-SNAPSHOT"
 
 scalaVersion := "2.12.8"
 crossScalaVersions := Seq("2.12.8", "2.13.0")

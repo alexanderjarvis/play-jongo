@@ -12,3 +12,4 @@ dist
 .target
 .idea/
 *.iml
+.bsp/

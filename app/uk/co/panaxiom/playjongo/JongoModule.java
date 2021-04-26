@@ -1,18 +1,15 @@
 package uk.co.panaxiom.playjongo;
 
-import play.api.Configuration;
-import play.api.Environment;
-import play.api.inject.Binding;
-import play.api.inject.Module;
-import scala.collection.Seq;
+import java.util.Collections;
 
 /**
- * Play 2.6 Module implementation.
+ * Play 2.7 Module implementation.
  */
-public class JongoModule extends Module {
+public class JongoModule extends play.inject.Module {
 
     @Override
-    public Seq<Binding<?>> bindings(Environment environment, Configuration configuration) {
-        return seq(bind(PlayJongo.class).toSelf());
+    public java.util.List<play.inject.Binding<?>> bindings(final play.Environment environment, final com.typesafe.config.Config config) {
+        return Collections.singletonList(bindClass(JongoModule.class).toSelf());
     }
+
 }

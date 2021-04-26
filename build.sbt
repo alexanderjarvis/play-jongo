@@ -4,26 +4,27 @@ name := "play-jongo"
 
 organization := "uk.co.panaxiom"
 
-description := "Play 2.6+ Module for Jongo http://jongo.org/"
+description := "Play 2.8+ Module for Jongo http://jongo.org/"
 
-version := "2.2.0-jongo1.4-SNAPSHOT"
+version := "2.8.16-jongo1.5-SNAPSHOT"
 
-scalaVersion := "2.12.8"
-crossScalaVersions := Seq("2.12.8", "2.13.0")
+scalaVersion := "2.13.10"
+scalacOptions += "-target:jvm-11"
+crossScalaVersions := Seq("2.12.17", "2.13.10")
 
 libraryDependencies ++= Seq(
-  "org.mongodb" % "mongo-java-driver" % "3.10.2",
-  "org.jongo" % "jongo" % "1.4.0",
-  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.9.9" % "optional",
-  "org.assertj" % "assertj-core" % "3.12.2" % Test
+  "org.mongodb" % "mongo-java-driver" % "3.12.11",
+  "org.jongo" % "jongo" % "1.5.0",
+  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.12.7" % "optional",
+  "org.assertj" % "assertj-core" % "3.23.1" % Test
 )
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
-javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-encoding", "UTF-8", "-Xlint:deprecation")
+javacOptions ++= Seq("-source", "11", "-target", "11", "-encoding", "UTF-8", "-Xlint:deprecation")
 
 // "-v" needed for more verbose output, otherwise only the number of tests is reported
-testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-v"))
+Test / testOptions := Seq(Tests.Argument(TestFrameworks.JUnit, "-v"))
 
 // Maven publishing info
 publishMavenStyle := true
@@ -36,7 +37,7 @@ publishTo := {
     Some("releases"  at nexus + "service/local/staging/deploy/maven2")
 }
 
-publishArtifact in Test := false
+Test / publishArtifact := false
 
 pomIncludeRepository := { _ => false }
 
@@ -63,5 +64,10 @@ pomExtra := (
       <id>martin.grotzke</id>
       <name>Martin Grotzke</name>
       <url>https://github.com/magro</url>
+    </developer>
+    <developer>
+      <id>alex.rambau</id>
+      <name>Alex Rambau</name>
+      <url>https://github.com/arambau</url>
     </developer>
   </developers>)

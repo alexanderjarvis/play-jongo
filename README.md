@@ -1,39 +1,17 @@
-PlayJongo Play 2.6+ Module
+PlayJongo Play 2.8.x Module
 =====================================
 
-This is a Play 2.6+ Module for [Jongo](http://jongo.org/)
+This is a Play 2.8.x Module for [Jongo](http://jongo.org/)
 (a MongoDB Java driver wrapper).
 
-*If you're using Play! 2.5.x, 2.4.x, 2.3.x, 2.2.x or 2.1.x you can use an older version of play-jongo:*
-* for 2.5.x use `2.0.0-jongo1.3`
-* for 2.4.x use `1.0.1-jongo1.2`
-* for 2.3.x use `0.7.1-jongo1.0`
-* for 2.2.x use `0.6.0-jongo1.0`
-* for 2.1.x use `0.5.0-jongo0.4`
+[![Build Status](https://travis-ci.com/codevaultonline/playframework-jongo.svg?branch=master)](https://travis-ci.com/codevaultonline/playframework-jongo)
 
-[![Build Status](https://jenkins.inoio.de/job/play-jongo/badge/icon)](http://jenkins.inoio.de/job/play-jongo/)
+Clean, Rebuild and Publish to Local M2 Repository
+-----------
+```sbt reload clean compile publishM2```
 
 Installation
 -----------
-
-Add the following to your projects Build.scala (for build.sbt use `libraryDependencies` instead of `appDependencies`):
-
-	val appDependencies = Seq(
-	  "uk.co.panaxiom" %% "play-jongo" % "2.1.0-jongo1.3"
-	)
-
-*__Note related to play-jongo with Play 2.2:__ because there were issues reported due to incompatibilities of Play 2.2!, bson4jackson and the current version of jackson,
-you might actually want to use the following dependencies:*
-
-	val appDependencies = Seq(
-	  "de.undercouch" % "bson4jackson" % "2.1.0" force(),
-	  "com.fasterxml.jackson.core" % "jackson-databind" % "2.1.0" force(),
-	  "com.fasterxml.jackson.core" % "jackson-annotations" % "2.1.0" force(),
-	  "com.fasterxml.jackson.core" % "jackson-core" % "2.1.0" force(),
-	  "org.mongodb" % "mongo-java-driver" % "2.11.3",
-	  "org.jongo" % "jongo" % "1.0",
-	  "uk.co.panaxiom" %% "play-jongo" % "0.7.0-jongo1.0"
-	)
 
 You will need to override the application.conf configuration to specify your MongoDB configuration.
 

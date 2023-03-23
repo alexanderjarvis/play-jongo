@@ -6,17 +6,17 @@ organization := "uk.co.panaxiom"
 
 description := "Play 2.8+ Module for Jongo http://jongo.org/"
 
-version := "2.8.16-jongo1.5-SNAPSHOT"
+version := "2.8.19-jongo1.5-SNAPSHOT"
 
 scalaVersion := "2.13.10"
 scalacOptions += "-target:jvm-11"
 crossScalaVersions := Seq("2.12.17", "2.13.10")
 
 libraryDependencies ++= Seq(
-  "org.mongodb" % "mongo-java-driver" % "3.12.11",
-  "org.jongo" % "jongo" % "1.5.0",
+  "org.mongodb" % "mongo-java-driver" % "3.12.12",
+  "org.jongo" % "jongo" % "1.5.1",
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.12.7" % "optional",
-  "org.assertj" % "assertj-core" % "3.23.1" % Test
+  "org.assertj" % "assertj-core" % "3.24.2" % Test
 )
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)

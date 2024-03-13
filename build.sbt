@@ -8,14 +8,14 @@ description := "Play 2.8+ Module for Jongo http://jongo.org/"
 
 version := "2.8.19-jongo1.5-SNAPSHOT"
 
-scalaVersion := "2.13.10"
+scalaVersion := "2.13.11"
 scalacOptions += "-target:jvm-11"
 crossScalaVersions := Seq("2.12.17", "2.13.10")
 
 libraryDependencies ++= Seq(
-  "org.mongodb" % "mongo-java-driver" % "3.12.12",
+  "org.mongodb" % "mongo-java-driver" % "3.12.14",
   "org.jongo" % "jongo" % "1.5.1",
-  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.12.7" % "optional",
+  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.13.5" % "optional",
   "org.assertj" % "assertj-core" % "3.24.2" % Test
 )
 

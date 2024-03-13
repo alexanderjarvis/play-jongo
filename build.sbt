@@ -10,7 +10,7 @@ version := "2.8.19-jongo1.5-SNAPSHOT"
 
 scalaVersion := "2.13.11"
 scalacOptions += "-target:jvm-11"
-crossScalaVersions := Seq("2.12.17", "2.13.10")
+crossScalaVersions := Seq("2.12.19", "2.13.13")
 
 libraryDependencies ++= Seq(
   "org.mongodb" % "mongo-java-driver" % "3.12.14",

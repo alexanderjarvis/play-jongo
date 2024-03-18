@@ -81,7 +81,7 @@ public class PlayJongo {
                     // can't use that one
                 }
                 if (constructor == null) {
-                    return (MongoClientFactory) factoryClass.newInstance();
+                    return (MongoClientFactory) factoryClass.getDeclaredConstructor().newInstance();
                 }
                 return (MongoClientFactory) constructor.newInstance(config);
             } catch (ClassNotFoundException e) {

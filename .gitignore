@@ -10,3 +10,7 @@ dist
 .project
 .settings/
 .target
+.idea/
+*.iml
+.bsp/
+README.local.md

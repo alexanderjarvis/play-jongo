@@ -1,43 +1,43 @@
-import de.johoop.findbugs4sbt.FindBugs._
+import com.github.sbt.findbugs.FindbugsPlugin._
 
 name := "play-jongo"
 
 organization := "uk.co.panaxiom"
 
-description := "Play 2.6.x Module for Jongo http://jongo.org/"
+description := "Play 2.8+ Module for Jongo http://jongo.org/"
 
-version := "2.1.0-jongo1.3"
+version := "2.8.19-jongo1.5-SNAPSHOT"
 
-scalaVersion := "2.12.5"
+scalaVersion := "2.13.11"
+scalacOptions += "-target:jvm-11"
+crossScalaVersions := Seq("2.12.19", "2.13.13")
 
 libraryDependencies ++= Seq(
-  "org.mongodb" % "mongo-java-driver" % "3.4.2",
-  "org.jongo" % "jongo" % "1.3.0",
-  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.8.9" % "optional",
-  "org.easytesting" % "fest-assert" % "1.4" % "test"
+  "org.mongodb" % "mongo-java-driver" % "3.12.14",
+  "org.jongo" % "jongo" % "1.5.1",
+  "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.13.5" % "optional",
+  "org.assertj" % "assertj-core" % "3.24.2" % Test
 )
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
-findbugsSettings
-
-javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-encoding", "UTF-8")
+javacOptions ++= Seq("-source", "11", "-target", "11", "-encoding", "UTF-8", "-Xlint:deprecation")
 
 // "-v" needed for more verbose output, otherwise only the number of tests is reported
-testOptions in Test := Seq(Tests.Argument(TestFrameworks.JUnit, "-v"))
+Test / testOptions := Seq(Tests.Argument(TestFrameworks.JUnit, "-v"))
 
 // Maven publishing info
 publishMavenStyle := true
 
 publishTo := {
   val nexus = "https://oss.sonatype.org/"
-  if (version.value.trim.endsWith("SNAPSHOT"))
+  if (isSnapshot.value)
     Some("snapshots" at nexus + "content/repositories/snapshots")
   else
     Some("releases"  at nexus + "service/local/staging/deploy/maven2")
 }
 
-publishArtifact in Test := false
+Test / publishArtifact := false
 
 pomIncludeRepository := { _ => false }
 
@@ -64,5 +64,10 @@ pomExtra := (
       <id>martin.grotzke</id>
       <name>Martin Grotzke</name>
       <url>https://github.com/magro</url>
+    </developer>
+    <developer>
+      <id>alex.rambau</id>
+      <name>Alex Rambau</name>
+      <url>https://github.com/arambau</url>
     </developer>
   </developers>)
